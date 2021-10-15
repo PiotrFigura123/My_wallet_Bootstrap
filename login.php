@@ -50,12 +50,13 @@ session_start();
                             <span class="input-group-text">
                                 <i class="bi bi-shield-exclamation"></i>
                             </span>
-                        <input type="password" class="form-control" name="password">
+                        <input type="password" class="form-control"name ="password">
                         </div>
                         <div class="mb-4 input-group">
                             <input type="submit" class="form-control m-2 " value="Zaloguj sie">
                             <input type="submit" class="form-control m-2 " value="Powrot do">
                         </div>
+                        
                        
                        
                     </form>
