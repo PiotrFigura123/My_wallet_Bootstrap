@@ -18,7 +18,7 @@
     </div>
     <ul class="collapse navbar-collapse ms-auto">
         <li class="nav-item">
-            <a href="#login" class="btn btn-info btn-secondary">Login</a>
+            <a href="login.php" class="btn btn-info btn-secondary">Login</a>
         </li>
     </ul>
 </nav>

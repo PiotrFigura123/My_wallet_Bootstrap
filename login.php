@@ -13,7 +13,7 @@
     
     <nav class="navbar bg-dark navbar-white">
         <div class="container ps-2">
-        <a href="#" class="navbar-brand"><i class="bi bi-wallet2"></i>My Wallet</a>
+        <a href="index.php" class="navbar-brand"><i class="bi bi-wallet2"></i>My Wallet</a>
         </div>
     </nav>
  <!--Boxes-->
@@ -46,6 +46,10 @@
                                 <i class="bi bi-shield-exclamation"></i>
                             </span>
                         <input type="email" class="form-control"id="email" placeholder="example@wp.pl">
+                        </div>
+                        <div class="mb-4 input-group">
+                            <input type="submit" class="form-control m-2 " value="Zaloguj sie">
+                            <input type="submit" class="form-control m-2 " value="Powrot do">
                         </div>
                        
                        
