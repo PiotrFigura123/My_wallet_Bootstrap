@@ -1,3 +1,9 @@
+<?php
+
+session_start();
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -32,7 +38,7 @@
                         <p class="card-text">
                             Whatever on plus 
                         </p>
-                        <a href="" class="btn btn-dark">Add income</a>
+                        <a href="add_income.php" class="btn btn-dark">Add income</a>
                         </div>
                     </div>
                 </div>
@@ -48,7 +54,7 @@
                         </h3>
                         <p class="card-text">
                           Whatever on minus</p>
-                        <a href="" class="btn btn-dark">Add outcome</a>
+                        <a href="add_outcome.php" class="btn btn-dark">Add outcome</a>
                         </div>
                     </div>
                 </div>
@@ -63,7 +69,7 @@
                         </h3>
                         <p class="card-text">
                           Wynikowa dwoch poprzednich</p>
-                        <a href="" class="btn btn-dark">Check</a>
+                        <a href="check_balance.php" class="btn btn-dark">Check</a>
                         </div>
                     </div>
                 </div>
@@ -91,7 +97,7 @@
                                     <i class="bi bi-door-open"></i>
                             </div>
                             <h3 class="card-title mb-3">
-                                <a href="" class="btn btn-primary">Log out</a>
+                                <a href="logout.php" class="btn btn-primary">Log out</a>
                             </h3>
                             
                             
@@ -99,8 +105,8 @@
                         </div>
                     </div>
                 </div>
-
-
+            </div>
+        </section>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>  
 </body>
 </html>

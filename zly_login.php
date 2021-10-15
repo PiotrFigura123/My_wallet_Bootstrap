@@ -57,7 +57,10 @@ session_start();
                             <input type="submit" class="form-control m-2 " value="Powrot do">
                         </div>
                        
-                       
+                        <?php
+if(isset($_SESSION['blad']))
+echo $_SESSION['blad'];
+?>
                     </form>
                 </div>
             </div>
