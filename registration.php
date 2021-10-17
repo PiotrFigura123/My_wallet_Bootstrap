@@ -3,9 +3,44 @@
 session_start();
 if(isset($_POST['email']))
 {
+    //Udana walidacja! 
+    $wszystko_OK =true;
 
+    //sprawdz nickname
+    $nick=$_POST['nick'];
+    //sprawdzenie dlugoci nicka
+    if((strlen($nick)<3)||(strlen($nick)>20))
+    {
+        $wszystko_OK=false;
+        $_SESSION['e_nick']='Nick musi posiadac od 3 do 20 znakow';
+    }
+
+    //Sprawdz poprawnosc formularza
+
+    $email=$_POST['email'];
+    $haslo1=$_POST['haslo1'];
+    $haslo2=$_POST['haslo2'];
+    
+    if((strlen($haslo1)<8)||(strlen($haslo2)>20))
+    {
+        $wszystko_OK=false;
+        $_SESSION['e_haslo']='Haslo musi posiadac od 8 do 20 znakow';
+    
+    }
+    if($haslo1!=$haslo2)
+    {
+        $wszystko_OK=false;
+        $_SESSION['e_haslo']='Hasla musza byc rowne';
+    
+    }
+
+    if($wszystko_OK==true)
+    {
+        //wsystko zalicone, dodajemy do bazy
+        echo "Udana walidacja";
+        exit();
+    }
 }
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -18,6 +53,16 @@ if(isset($_POST['email']))
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
     <title>Stworz konto</title>
     <script src="https://www.google.com/recaptcha/api.js"></script>
+    <style>
+        .error
+        {
+            color:red;
+            margin-top:10px;
+            margin-bottom:10px;
+            font-weight:bold;
+        }
+    </style>
+
 </head>
 <body class="bg-dark">
     
@@ -35,14 +80,21 @@ if(isset($_POST['email']))
                     <form  method="post">
                         
     
-                        <label for="name" class="form-label">Name:</label>
+                        <label for="nick" class="form-label">Name:</label>
                         <div class="input-group mb-2">
                             <span class="input-group-text">
                                 <i class="bi bi-person-fill"></i>
                             </span>
                         
-                        <input type="text" class="form-control" name="name" placeholder="e.g.Mario">
+                        <input type="text" class="form-control" name="nick" placeholder="e.g.Mario">
                         </div>
+                        <?php
+                        if(isset($_SESSION['e_nick']))
+                        {
+                            echo '<div class="error">'.$_SESSION['e_nick'].'</div';
+                            unset($_SESSION['e_nick']);
+                        }
+                        ?>
                         <label for="email" class="form-label">Email adress:</label>
                         <div class="mb-2 input-group">
                             <span class="input-group-text">
@@ -56,21 +108,26 @@ if(isset($_POST['email']))
                                 <i class="bi bi-shield-exclamation"></i>
                             </span>
 
-                        <input type="password" class="form-control"name ="password1">
+                        <input type="password" class="form-control"name ="haslo1">
                         </div>
+                        <?php
+                        if(isset($_SESSION['e_haslo']))
+                        {
+                            echo '<div class="error">'.$_SESSION['e_haslo'].'</div';
+                            unset($_SESSION['e_haslo']);
+                        }
+                        ?>
                         <label for="email" class="form-label">Repeat password:</label>
                         <div class="mb-4 input-group">
                             <span class="input-group-text">
                                 <i class="bi bi-shield-exclamation"></i>
                             </span>
-                        <input type="password" class="form-control"name ="password2">
+                        <input type="password" class="form-control"name ="haslo2">
                         </div>
                         <label >
                         <input type="checkbox" name ="regulamin"> Akceptuje regulamin
                         </label>
-                        <div class="mb-4 input-group col-sm-6  mx-auto">
                         <div class="g-recaptcha " data-sitekey="6LdgO9gcAAAAABT4mVvtiu5gxTaALya1ntbKUS91"></div>
-                        </div>
                         <input type="submit" value="Send">
                         <div class="mb-4 input-group">
                             <input type="submit" class="form-control m-2 " value="Register">
