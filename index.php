@@ -47,7 +47,8 @@ if((isset($_SESSION['zalogowany']))&&($_SESSION['zalogowany']==true))
                 zamiast się zastanawiać, gdzie się rozeszły.
             </p>
             <p class="text-white">JOHN C. MAXWELL</p>
-            <button class="button btn-primary btn-lg mb-4">Register</button>
+            <a href="registration.php"><button class="button btn-primary btn-lg mb-4">Register</button></a>
+            
             </div>
         <div>
             <img class="img-fluid d-none d-sm-block" src="img/rejestracja.png" alt="">
