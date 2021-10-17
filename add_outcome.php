@@ -1,3 +1,13 @@
+<?php
+
+session_start();
+if(!isset($_SESSION['zalogowany']))
+{
+    header('Location:index.php');
+    exit();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,7 +23,7 @@
     
     <nav class="navbar bg-dark navbar-white">
         <div class="container ps-2">
-        <a href="#" class="navbar-brand"><i class="bi bi-wallet2"></i>My Wallet</a>
+        <a href="index.php" class="navbar-brand"><i class="bi bi-wallet2"></i>My Wallet</a>
         </div>
     </nav>
     
