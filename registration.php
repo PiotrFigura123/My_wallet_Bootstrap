@@ -34,6 +34,16 @@ if(isset($_POST['email']))
     
     }
 
+    $haslo_hash=password_hash($haslo1,PASSWORD_DEFAULT);
+    
+    //czy zaakceptowano regulamin
+    if(!isset($_POST['regulamin']))
+    {
+        $wszystko_OK=false;
+        $_SESSION['e_regulamin']='Potwierdz akceptacje regulaminu';
+    
+    }
+
     if($wszystko_OK==true)
     {
         //wsystko zalicone, dodajemy do bazy
@@ -127,6 +137,13 @@ if(isset($_POST['email']))
                         <label >
                         <input type="checkbox" name ="regulamin"> Akceptuje regulamin
                         </label>
+                        <?php
+                        if(isset($_SESSION['e_regulamin']))
+                        {
+                            echo '<div class="error">'.$_SESSION['e_regulamin'].'</div';
+                            unset($_SESSION['e_regulamin']);
+                        }
+                        ?>
                         <div class="g-recaptcha " data-sitekey="6LdgO9gcAAAAABT4mVvtiu5gxTaALya1ntbKUS91"></div>
                         <input type="submit" value="Send">
                         <div class="mb-4 input-group">
