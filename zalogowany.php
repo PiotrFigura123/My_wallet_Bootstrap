@@ -1,13 +1,16 @@
 <?php
 
 session_start();
-if((isset($_SESSION['zalogowany']))&&($_SESSION['zalogowany']==true))
+if(isset($_SESSION['udanarejestracja']))
 {
     header('Location:main_meni.php');
     exit();
 }
+else
+{
+    unset($_SESSION['udanarejestracja']);
+}
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -21,6 +24,7 @@ if((isset($_SESSION['zalogowany']))&&($_SESSION['zalogowany']==true))
 </head>
 <body>
     
+    
   <!--Navbar-->
   <nav class="navbar navbar-expand bg-dark navbar-white">
     <div class="container ps-5">
@@ -32,7 +36,7 @@ if((isset($_SESSION['zalogowany']))&&($_SESSION['zalogowany']==true))
         </li>
     </ul>
 </nav>
-
+Dziki za rejestracje! Możesz sie zalogowac!
  <!--show case-->
  <section class="bg-dark text-black p-5 ">
     <div class="container-fluid  ">

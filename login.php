@@ -12,7 +12,7 @@ session_start();
     
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
-    <title>Logins</title>
+    <title>Login</title>
 </head>
 <body class="bg-dark">
     
@@ -45,13 +45,14 @@ session_start();
                             </span>
                         <input type="email" class="form-control" name="email" placeholder="example@wp.pl">
                         </div>
-                        <label for="email" class="form-label">Password:</label>
+                        <label for="email" class="form-label">Your password:</label>
                         <div class="mb-4 input-group">
                             <span class="input-group-text">
                                 <i class="bi bi-shield-exclamation"></i>
                             </span>
-                        <input type="password" class="form-control"name ="password">
+                        <input type="password" class="form-control"name ="password1">
                         </div>
+                        
                         <div class="mb-4 input-group">
                             <input type="submit" class="form-control m-2 " value="Zaloguj sie">
                             <input type="submit" class="form-control m-2 " value="Powrot do">
