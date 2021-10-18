@@ -44,6 +44,63 @@ if(isset($_POST['email']))
     
     }
 
+    require_once "connect.php";
+
+    mysqli_report(MYSQLI_REPORT_STRICT);
+    try
+    {
+        
+        $polaczenie = new mysqli($host, $db_user,$db_password,$db_name);
+        if($polaczenie->connect_errno!=0)
+        {
+            throw new Exception(mysqli_connect_errno());
+        }
+        else
+        {
+            $rezultat = $polaczenie->query("SELECT userId FROM logownie WHERE name='$nick'");
+            
+            if(!$rezultat) throw new Exception($polaczenie->error);
+            $ile_takich_nickow=$rezultat->num_rows;
+            if($ile_takich_nickow>0)
+            {
+                $wszystko_OK = false;
+                $_SESSION['e_nick']="Istnieje juz konto o tym nicku";
+            }
+
+            $rezultat = $polaczenie->query("SELECT userId FROM logownie WHERE email='$email'");
+            
+            if(!$rezultat) throw new Exception($polaczenie->error);
+            $ile_takich_emaili=$rezultat->num_rows;
+            if($ile_takich_emaili>0)
+            {
+                $wszystko_OK = false;
+                $_SESSION['e_email']="Istnieje juz konto o tym emailu";
+            }
+
+           
+            if($wszystko_OK==true)
+        {
+            //wsystko zalicone, dodajemy do bazy
+           if($polaczenie->query("INSERT INTO logownie VALUES(NULL,'$nick','$email','$email','$haslo_hash')"))
+            {
+                $_SESSION['udanarejestracja']=true;
+                header('Location:registration.php');
+
+            }
+            else
+            {
+                throw new Exception($polaczenie->error);
+            }
+        }
+            $polaczenie->close();
+        }
+    }
+    catch(Exception $e)
+    {
+        echo '<span style="color:red;">"Blad serwera, poprosimy orejestracje w innym terminie"</span>';
+        echo '</br>';
+    }
+
     if($wszystko_OK==true)
     {
         //wsystko zalicone, dodajemy do bazy
@@ -112,6 +169,13 @@ if(isset($_POST['email']))
                             </span>
                         <input type="email" class="form-control" name="email" placeholder="example@wp.pl">
                         </div>
+                        <?php
+                        if(isset($_SESSION['e_email']))
+                        {
+                            echo '<div class="error">'.$_SESSION['e_email'].'</div';
+                            unset($_SESSION['e_email']);
+                        }
+                        ?>
                         <label for="email" class="form-label">Your password:</label>
                         <div class="mb-4 input-group">
                             <span class="input-group-text">
