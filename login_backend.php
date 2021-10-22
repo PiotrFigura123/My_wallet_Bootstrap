@@ -30,7 +30,7 @@ else
                 if(password_verify($haslo,$wiersz['password']))
                 {
                     $_SESSION['zalogowany']=true;
-                    $_SESSION['id']=$wiersz['userId'];
+                    $_SESSION['idUser']=$wiersz['userId'];
                     $_SESSION['user']=$wiersz['name'];
                     $_SESSION['nazwisko']=$wiersz['surename'];
                     $_SESSION['Email']=$wiersz['email'];

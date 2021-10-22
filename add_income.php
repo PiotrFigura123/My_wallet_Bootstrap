@@ -27,7 +27,7 @@ if(!isset($_SESSION['zalogowany']))
     </nav>
 
     <section class="p-3" >
-        <form action="saveIncome" method="POST">
+        <form action="addAmountToSql.php" method="POST">
         <div class="container">
             <div class="row text-center g-4">
                 <div class="col-md">
@@ -49,28 +49,28 @@ if(!isset($_SESSION['zalogowany']))
                         <h3>Select category:</h3>
 	                    
                         <div>
-                        <input type="radio" id="huey" name="drone" value="huey" checked>
-                        <label for="huey">Salary</label>
+                        <input type="radio" id="huey" name="drone" value="Salary" checked>
+                        <label>Salary</label>
                         </div>
 
                         <div>
-                        <input type="radio" id="dewey" name="drone" value="dewey">
-                        <label for="dewey">Bank transation</label>
+                        <input type="radio" id="dewey" name="drone" value="Bank transation">
+                        <label >Bank transation</label>
                         </div>
 
                         <div>
-                        <input type="radio" id="louie" name="drone" value="louie">
-                        <label for="louie">Allegro</label>
+                        <input type="radio" id="louie" name="drone" value="Allegro">
+                        <label>Allegro</label>
                         </div>
                         <div>
-                        <input type="radio" id="louie" name="drone" value="louie">
-                        <label for="louie">Different</label>
+                        <input type="radio" id="louie" name="drone" value="Different">
+                        <label>Different</label>
                         </div>
 
                         <input type="Comment" placeholder="Comment"name ="incomeComment">
                         <p class="mt-3">
-                            <a href="#" class="btn btn-dark">Save</a>
-                            <a href="main_meni.php" class="btn btn-dark">Cancel</a>
+                            <input type="submit" value="Save">
+                            <a href="main_meni.php" class=""><input type="button" value="Cancel"></a>
                         </p>
                         
                         </div>
