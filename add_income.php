@@ -27,6 +27,7 @@ if(!isset($_SESSION['zalogowany']))
     </nav>
 
     <section class="p-3" >
+        <form action="saveIncome" method="POST">
         <div class="container">
             <div class="row text-center g-4">
                 <div class="col-md">
@@ -39,10 +40,10 @@ if(!isset($_SESSION['zalogowany']))
                             Income
                         </h3>
                         <p class="card-text">
-                            <input type="value" placeholder="Value">
+                            <input type="value" placeholder="Value" name ="incomeValue">
                         </p>
                         <p class="card-text">
-                            <input type="date">
+                            <input type="date" name ="incomeDate">
                         </p>
                             
                         <h3>Select category:</h3>
@@ -66,10 +67,10 @@ if(!isset($_SESSION['zalogowany']))
                         <label for="louie">Different</label>
                         </div>
 
-                        <input type="Comment" placeholder="Comment">
+                        <input type="Comment" placeholder="Comment"name ="incomeComment">
                         <p class="mt-3">
                             <a href="#" class="btn btn-dark">Save</a>
-                            <a href="#" class="btn btn-dark">Cancel</a>
+                            <a href="main_meni.php" class="btn btn-dark">Cancel</a>
                         </p>
                         
                         </div>
@@ -78,6 +79,7 @@ if(!isset($_SESSION['zalogowany']))
             </div>   
         </div>
     </div>
+    </form>
     </section>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>  
 </body>

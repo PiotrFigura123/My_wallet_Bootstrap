@@ -29,15 +29,6 @@ session_start();
                 <div class="card bg-success text-light ">
                     <form action="login_backend.php" method="post">
                         
-    
-                        <label for="name" class="form-label">Name:</label>
-                        <div class="input-group mb-2">
-                            <span class="input-group-text">
-                                <i class="bi bi-person-fill"></i>
-                            </span>
-                        
-                        <input type="text" class="form-control" name="name" placeholder="e.g.Mario">
-                        </div>
                         <label for="email" class="form-label">Email adress:</label>
                         <div class="mb-2 input-group">
                             <span class="input-group-text">
