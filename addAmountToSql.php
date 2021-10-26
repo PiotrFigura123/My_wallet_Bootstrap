@@ -8,7 +8,7 @@ $value=$_POST['incomeValue'];
 $date=$_POST['incomeDate'];
 $paymentMethod=$_POST['drone'];
 $comment=$_POST['incomeComment'];
-$statusZapisu=false;
+
 $wszystko_OK =true;
 //echo $value."</br>".$userId;
 
@@ -42,7 +42,7 @@ if(is_numeric($value))
                
                 {
                     $_SESSION['udanyZapis']=true;
-                    header('Location:add_income.php');
+                    
                 }
                 else
                 throw new Exception($polaczenie1->error);
@@ -56,12 +56,13 @@ if(is_numeric($value))
         echo '<span style="color:red;">"Blad serwera, poprosimy orejestracje w innym terminie"</span>';
         echo '</br>';
       }
+      /*
       if($wszystko_OK==true)
         {
             //wsystko zalicone, dodajemy do bazy
             echo "Udana walidacja";
             exit();
-        }
+        }*/
     
   }
   else
@@ -82,6 +83,15 @@ if(is_numeric($value))
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
     <title>Incomes</title>
+    <style>
+        .error
+        {
+            color:red;
+            margin-top:10px;
+            margin-bottom:10px;
+            font-weight:bold;
+        }
+    </style>
 </head>
 <body class="bg-dark">
     
@@ -92,7 +102,7 @@ if(is_numeric($value))
     </nav>
 
     <section class="p-3" >
-        <form action="add_income.php" method="POST">
+        <form method ="post">
         <div class="container">
             <div class="row text-center g-4">
                 <div class="col-md">
@@ -104,6 +114,7 @@ if(is_numeric($value))
                         <h3 class="card-title mb-3">
                             Income
                         </h3>
+                        
                         <p class="card-text">
                             <input type="value" placeholder="Value" name ="incomeValue">
                         <?php
@@ -111,6 +122,7 @@ if(is_numeric($value))
                         {
                             echo '<div class="error">'.$_SESSION['e_value'].'</div';
                             unset($_SESSION['e_value']);
+                            $_SESSION['udanyZapis']=false;
                         }
                         ?>
                         </p>
@@ -147,6 +159,13 @@ if(is_numeric($value))
                         </p>
                         
                         </div>
+                        <?php 
+                            if($_SESSION['udanyZapis']==true)
+                            {
+                                echo "Dodales przychod";
+                                //$_SESSION['udanyZapis']=false;
+                            }
+                            ?>
                     </div>
                 </div>
             </div>   

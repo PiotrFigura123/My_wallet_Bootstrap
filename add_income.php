@@ -1,6 +1,7 @@
 <?php
 
 session_start();
+$_SESSION['udanyZapis']=false;
 if(!isset($_SESSION['zalogowany']))
 {
     header('Location:index.php');
