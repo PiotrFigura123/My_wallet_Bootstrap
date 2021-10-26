@@ -6,6 +6,7 @@ if(!isset($_SESSION['zalogowany']))
     header('Location:index.php');
     exit();
 }
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -37,7 +38,9 @@ if(!isset($_SESSION['zalogowany']))
                                 <i class="bi bi-cash-stack"></i>
                         </div>
                         <h3 class="card-title mb-3">
+                            
                             Income
+                            
                         </h3>
                         <p class="card-text">
                             <input type="value" placeholder="Value" name ="incomeValue">
@@ -72,7 +75,13 @@ if(!isset($_SESSION['zalogowany']))
                             <input type="submit" value="Save">
                             <a href="main_meni.php" class=""><input type="button" value="Cancel"></a>
                         </p>
-                        
+                        <?php 
+                            if($_SESSION['udanyZapis']==true)
+                            {
+                                echo "Dodales przychod";
+                                $_SESSION['udanyZapis']=false;
+                            }
+                            ?>
                         </div>
                     </div>
                 </div>
