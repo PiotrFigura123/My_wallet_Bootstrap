@@ -1,10 +1,10 @@
 <?php
 session_start();
-if(isset($_POST['incomeValue']))
+if(isset($_POST['valueForm']))
 {
 
 $userId=$_SESSION['idUser'];
-$value=$_POST['incomeValue'];
+$value=$_POST['valueForm'];
 $date=$_POST['incomeDate'];
 $paymentMethod=$_POST['drone'];
 $comment=$_POST['incomeComment'];
@@ -116,7 +116,7 @@ if(is_numeric($value))
                         </h3>
                         
                         <p class="card-text">
-                            <input type="value" placeholder="Value" name ="incomeValue">
+                            <input type="value" placeholder="Value" name ="valueForm">
                         <?php
                         if(isset($_SESSION['e_value']))
                         {

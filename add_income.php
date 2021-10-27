@@ -1,7 +1,7 @@
 <?php
 
 session_start();
-$_SESSION['udanyZapis']=false;
+
 if(!isset($_SESSION['zalogowany']))
 {
     header('Location:index.php');
@@ -29,7 +29,7 @@ if(!isset($_SESSION['zalogowany']))
     </nav>
 
     <section class="p-3" >
-        <form action="addAmountToSql.php" method="POST">
+        <form action="addAmountToSql.php" method="post">
         <div class="container">
             <div class="row text-center g-4">
                 <div class="col-md">
@@ -44,7 +44,7 @@ if(!isset($_SESSION['zalogowany']))
                             
                         </h3>
                         <p class="card-text">
-                            <input type="value" placeholder="Value" name ="incomeValue">
+                            <input type="value" placeholder="Value" name ="valueForm">
                         </p>
                         <p class="card-text">
                             <input type="date" name ="incomeDate">
@@ -76,13 +76,7 @@ if(!isset($_SESSION['zalogowany']))
                             <input type="submit" value="Save">
                             <a href="main_meni.php" class=""><input type="button" value="Cancel"></a>
                         </p>
-                        <?php 
-                            if($_SESSION['udanyZapis']==true)
-                            {
-                                echo "Dodales przychod";
-                                $_SESSION['udanyZapis']=false;
-                            }
-                            ?>
+                        
                         </div>
                     </div>
                 </div>
