@@ -46,7 +46,8 @@ session_start();
                         
                         <div class="mb-4 input-group">
                             <input type="submit" class="form-control m-2 " value="Zaloguj sie">
-                            <input type="submit" class="form-control m-2 " value="Powrot do">
+                            <input type="button" class="form-control m-2 " value="Cancel">
+                            
                         </div>
                         
                        
