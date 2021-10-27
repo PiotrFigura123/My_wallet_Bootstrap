@@ -28,6 +28,7 @@ if(!isset($_SESSION['zalogowany']))
     </nav>
     
     <section class="p-3 " >
+    <form action="add_outcome_backend.php" method="POST">
         <div class="container  ">
             <div class="row text-center g-4">
                 <div class="col-md">
@@ -40,10 +41,10 @@ if(!isset($_SESSION['zalogowany']))
                             Outcome
                         </h3>
                         <p class="card-text">
-                            <input type="value" placeholder="Value">
+                            <input type="value" placeholder="Value" name="outcomeValue">
                         </p>
                         <p class="card-text">
-                            <input type="date">
+                            <input type="date" name="outcomeDate">
                         </p>
                             
                         <h3>Payment by:</h3>
@@ -67,39 +68,39 @@ if(!isset($_SESSION['zalogowany']))
                         <h3 class="text-dark">Category:</h3>
 	                    <form class="text-dark">
                             <div >
-                                <input type="radio" id="huey" name="drone" value="huey" checked>
+                                <input type="radio" id="huey" name="drone1" value="huey" checked>
                                 <label for="huey">Food</label>
                                 </div>
         
                                 <div>
-                                <input type="radio" id="dewey" name="drone" value="dewey">
+                                <input type="radio" id="dewey" name="drone1" value="dewey">
                                 <label for="dewey">Flat</label>
                                 </div>
         
                                 <div>
-                                <input type="radio" id="louie" name="drone" value="louie">
+                                <input type="radio" id="louie" name="drone1" value="louie">
                                 <label for="louie">Auto</label>
                                 </div>
                                 <div>
-                                <input type="radio" id="louie" name="drone" value="louie">
+                                <input type="radio" id="louie" name="drone1" value="louie">
                                 <label for="louie">Allegro</label>
                                 </div>
                                 <div>
-                                    <input type="radio" id="huey" name="drone" value="huey" checked>
+                                    <input type="radio" id="huey" name="drone1" value="huey" checked>
                                     <label for="huey">Restaurant</label>
                                     </div>
             
                                     <div>
-                                    <input type="radio" id="dewey" name="drone" value="dewey">
+                                    <input type="radio" id="dewey" name="drone1" value="dewey">
                                     <label for="dewey">Cinema</label>
                                     </div>
             
                                     <div>
-                                    <input type="radio" id="louie" name="drone" value="louie">
+                                    <input type="radio" id="louie" name="drone1" value="louie">
                                     <label for="louie">Fines</label>
                                     </div>
                                     <div>
-                                    <input type="radio" id="louie" name="drone" value="louie">
+                                    <input type="radio" id="louie" name="drone1" value="louie">
                                     <label for="louie">Different</label>
                                     </div>
                         </form>                    
