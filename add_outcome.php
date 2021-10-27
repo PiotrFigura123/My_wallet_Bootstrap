@@ -68,39 +68,39 @@ if(!isset($_SESSION['zalogowany']))
                         <h3 class="text-dark">Category:</h3>
 	                    
                             <div >
-                                <input type="radio" id="huey" name="drone1" value="Food" checked>
+                                <input type="radio" name="drone1" value="Food" checked>
                                 <label>Food</label>
                                 </div>
         
                                 <div>
-                                <input type="radio" id="dewey" name="drone1" value="Flat">
+                                <input type="radio"  name="drone1" value="Flat">
                                 <label>Flat</label>
                                 </div>
         
                                 <div>
-                                <input type="radio" id="louie" name="drone1" value="Auto">
+                                <input type="radio"  name="drone1" value="Auto">
                                 <label >Auto</label>
                                 </div>
                                 <div>
-                                <input type="radio" id="louie" name="drone1" value="Allegro">
+                                <input type="radio"  name="drone1" value="Allegro">
                                 <label >Allegro</label>
                                 </div>
                                 <div>
-                                    <input type="radio" id="huey" name="drone1" value="Restaurant" checked>
+                                    <input type="radio" name="drone1" value="Restaurant" checked>
                                     <label >Restaurant</label>
                                     </div>
             
                                     <div>
-                                    <input type="radio" id="dewey" name="drone1" value="Cinema">
+                                    <input type="radio"  name="drone1" value="Cinema">
                                     <label >Cinema</label>
                                     </div>
             
                                     <div>
-                                    <input type="radio" id="louie" name="drone1" value="Fines">
+                                    <input type="radio"  name="drone1" value="Fines">
                                     <label >Fines</label>
                                     </div>
                                     <div>
-                                    <input type="radio" id="louie" name="drone1" value="Different">
+                                    <input type="radio"  name="drone1" value="Different">
                                     <label >Different</label>
                                     </div>
                                            

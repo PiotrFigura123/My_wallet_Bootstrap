@@ -16,7 +16,7 @@ if(!isset($_SESSION['zalogowany']))
     
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
-    <title>Balance</title>
+    <title>Balance2</title>
 </head>
 <body class="bg-dark">
     
@@ -27,7 +27,6 @@ if(!isset($_SESSION['zalogowany']))
     </nav>
 
     <section class="p-3" >
-        <form action="balance_backend.php" method ="post">
         <div class="container">
             <div class="row text-center g-4">
                 <div class="col-md">
@@ -51,19 +50,69 @@ if(!isset($_SESSION['zalogowany']))
                             <input type="date">
                             <input type="date">
                         </p>
-
-                        <p class="mt-3">
-                            <input type="submit" value="Display">
-                            <a href="main_meni.php" class=""><input type="button" value="Cancel"></a>
-                        </p>
-
-    
+                        <a href="#" class="btn btn-dark">Display</a>
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> 
+            <div class="row text-center g-3 mt-1">
+                <div class="col-md">
+                    <div class="card bg-info text-dark">
+                        <div class="card-body text-center">
+                            <div class="h1 mb-3">
+                                <i class="bi bi-cash-stack"></i>
+                        </div>
+                        <h3 class="card-title mb-3">
+                            Incomes
+                        </h3>
+                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="5"></textarea>
+                       
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md">
+                    <div class="card bg-info text-dark">
+                        <div class="card-body text-center">
+                            <div class="h1 mb-3">
+                                <i class="bi bi-shop"></i>
+                        </div>
+                        <h3 class="card-title mb-3">
+                            Outcomes
+                        </h3>
+                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="5"></textarea>
+                       
+                        </div>
+                    </div>
+                </div>
+            </div>  
+            <div class="col-md mt-2">
+                <div class="card bg-info text-dark">
+                    <div class="card-body text-center">
+                        <div class="h1 mb-3">
+                            <h3 class="card-title mb-3">
+                                Summary:
+                            </h3>
+                        
+                    </div>
+                   
+                    
+                </div>
+            </div> 
+            <div class="col-md mt-2">
+                <div class="card bg-info text-dark">
+                    <div class="card-body text-center">
+                        <div class="h1 mb-3">
+                            
+                            <a href="" class="btn btn-dark">Main manu</a>
+                    </div>
+                   
+                    
+                </div>
+            </div> 
         </div>
-        </form>
+        
+    </div>
+    
     </section>
     
     
