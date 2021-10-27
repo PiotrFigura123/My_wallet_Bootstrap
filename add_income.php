@@ -29,7 +29,7 @@ if(!isset($_SESSION['zalogowany']))
     </nav>
 
     <section class="p-3" >
-        <form action="addAmountToSql.php" method="POST">
+        <form action="addAmountToSql.php" method="post">
         <div class="container">
             <div class="row text-center g-4">
                 <div class="col-md">

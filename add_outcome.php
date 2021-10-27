@@ -28,8 +28,8 @@ if(!isset($_SESSION['zalogowany']))
     </nav>
     
     <section class="p-3 " >
-    <form action="add_outcome_backend.php" method="POST">
-        <div class="container  ">
+    <form action="add_outcome_backend.php" method="post">
+        <div class="container ">
             <div class="row text-center g-4">
                 <div class="col-md">
                     <div class="card bg-secondary text-light">
@@ -48,66 +48,66 @@ if(!isset($_SESSION['zalogowany']))
                         </p>
                             
                         <h3>Payment by:</h3>
-	                    <form>
-                            <div>
-                                <input type="radio" id="huey" name="drone" value="huey" checked>
-                                <label for="huey">Card</label>
+	                    
+                                <div>
+                                <input type="radio"  name="drone" value="Card" checked>
+                                <label>Card</label>
                                 </div>
         
                                 <div>
-                                <input type="radio" id="dewey" name="drone" value="dewey">
-                                <label for="dewey">Cash</label>
+                                <input type="radio"  name="drone" value="Cash">
+                                <label >Cash</label>
                                 </div>
         
                                 <div>
-                                <input type="radio" id="louie" name="drone" value="louie">
-                                <label for="louie">Different</label>
+                                <input type="radio"  name="drone" value="Different">
+                                <label >Different</label>
                                 </div>
                                
-                        </form>
+                        
                         <h3 class="text-dark">Category:</h3>
-	                    <form class="text-dark">
+	                    
                             <div >
-                                <input type="radio" id="huey" name="drone1" value="huey" checked>
-                                <label for="huey">Food</label>
+                                <input type="radio" id="huey" name="drone1" value="Food" checked>
+                                <label>Food</label>
                                 </div>
         
                                 <div>
-                                <input type="radio" id="dewey" name="drone1" value="dewey">
-                                <label for="dewey">Flat</label>
+                                <input type="radio" id="dewey" name="drone1" value="Flat">
+                                <label>Flat</label>
                                 </div>
         
                                 <div>
-                                <input type="radio" id="louie" name="drone1" value="louie">
-                                <label for="louie">Auto</label>
+                                <input type="radio" id="louie" name="drone1" value="Auto">
+                                <label >Auto</label>
                                 </div>
                                 <div>
-                                <input type="radio" id="louie" name="drone1" value="louie">
-                                <label for="louie">Allegro</label>
+                                <input type="radio" id="louie" name="drone1" value="Allegro">
+                                <label >Allegro</label>
                                 </div>
                                 <div>
-                                    <input type="radio" id="huey" name="drone1" value="huey" checked>
-                                    <label for="huey">Restaurant</label>
+                                    <input type="radio" id="huey" name="drone1" value="Restaurant" checked>
+                                    <label >Restaurant</label>
                                     </div>
             
                                     <div>
-                                    <input type="radio" id="dewey" name="drone1" value="dewey">
-                                    <label for="dewey">Cinema</label>
+                                    <input type="radio" id="dewey" name="drone1" value="Cinema">
+                                    <label >Cinema</label>
                                     </div>
             
                                     <div>
-                                    <input type="radio" id="louie" name="drone1" value="louie">
-                                    <label for="louie">Fines</label>
+                                    <input type="radio" id="louie" name="drone1" value="Fines">
+                                    <label >Fines</label>
                                     </div>
                                     <div>
-                                    <input type="radio" id="louie" name="drone1" value="louie">
-                                    <label for="louie">Different</label>
+                                    <input type="radio" id="louie" name="drone1" value="Different">
+                                    <label >Different</label>
                                     </div>
-                        </form>                    
-                        <input class="mt-2"type="Comment" placeholder="Comment">
+                                           
+                        <input class="mt-2"type="Comment" placeholder="Comment" name="outcomeComment">
                         <p class="mt-3">
-                            <a href="#" class="btn btn-dark">Save</a>
-                            <a href="#" class="btn btn-dark">Cancel</a>
+                            <input type="submit" value="Save">
+                            <a href="main_meni.php" class=""><input type="button" value="Cancel"></a>
                         </p>
                         </div>
                     </div>
@@ -115,8 +115,9 @@ if(!isset($_SESSION['zalogowany']))
             </div>   
         </div>
     </div>
+    </form>
     </section>
-</div>
+
     
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>  
  

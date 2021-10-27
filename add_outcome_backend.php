@@ -8,7 +8,7 @@ $value=$_POST['outcomeValue'];
 $date=$_POST['outcomeDate'];
 $paymentMethod=$_POST['drone'];
 $paidFor=$_POST['drone1'];
-$comment=$_POST['incomeComment'];
+$comment=$_POST['outcomeComment'];
 
 $wszystko_OK =true;
 //echo $value."</br>".$userId;
@@ -39,7 +39,7 @@ if(is_numeric($value))
         if($wszystko_OK==true)
             {
                 //wsystko zalicone, dodajemy do bazy
-               if($polaczenie1->query("INSERT INTO bilans VALUES(NULL,$userId,$value,'$date','$paymentMethod','','','$comment')"))
+               if($polaczenie1->query("INSERT INTO bilans VALUES(NULL,$userId,$value,'$date','','$paymentMethod','$paidFor','$comment')"))
                
                 {
                     $_SESSION['udanyZapis']=true;
@@ -63,8 +63,8 @@ if(is_numeric($value))
             //wsystko zalicone, dodajemy do bazy
             echo "Udana walidacja";
             exit();
-        }*/
-    
+        }
+    */
   }
   else
   {
@@ -83,7 +83,7 @@ if(is_numeric($value))
     
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
-    <title>Incomes</title>
+    <title>Outcome2</title>
     <style>
         .error
         {
@@ -101,24 +101,22 @@ if(is_numeric($value))
         <a href="index.php" class="navbar-brand"><i class="bi bi-wallet2"></i>My Wallet</a>
         </div>
     </nav>
-
-    <section class="p-3" >
-        <form method ="post">
-        <div class="container">
+    <section class="p-3 " >
+    <form method="post">
+        <div class="container  ">
             <div class="row text-center g-4">
                 <div class="col-md">
-                    <div class="card bg-success text-light">
+                    <div class="card bg-secondary text-light">
                         <div class="card-body text-center">
                             <div class="h1 mb-3">
-                                <i class="bi bi-cash-stack"></i>
+                                <i class="bi bi-shop"></i>
                         </div>
                         <h3 class="card-title mb-3">
-                            Income
+                            Outcome
                         </h3>
-                        
                         <p class="card-text">
-                            <input type="value" placeholder="Value" name ="valueForm">
-                        <?php
+                            <input type="value" placeholder="Value" name="outcomeValue">
+                            <?php
                         if(isset($_SESSION['e_value']))
                         {
                             echo '<div class="error">'.$_SESSION['e_value'].'</div';
@@ -127,39 +125,72 @@ if(is_numeric($value))
                         }
                         ?>
                         </p>
-                        
                         <p class="card-text">
-                            <input type="date" name ="incomeDate">
+                            <input type="date" name="outcomeDate">
                         </p>
                             
-                        <h3>Select category:</h3>
+                        <h3>Payment by:</h3>
 	                    
-                        <div>
-                        <input type="radio" id="huey" name="drone" value="Salary" checked>
-                        <label>Salary</label>
-                        </div>
-
-                        <div>
-                        <input type="radio" id="dewey" name="drone" value="Bank transation">
-                        <label >Bank transation</label>
-                        </div>
-
-                        <div>
-                        <input type="radio" id="louie" name="drone" value="Allegro">
-                        <label>Allegro</label>
-                        </div>
-                        <div>
-                        <input type="radio" id="louie" name="drone" value="Different">
-                        <label>Different</label>
-                        </div>
-
-                        <input type="Comment" placeholder="Comment"name ="incomeComment">
+                                <div>
+                                <input type="radio" id="huey" name="drone" value="Card" checked>
+                                <label>Card</label>
+                                </div>
+        
+                                <div>
+                                <input type="radio" id="dewey" name="drone" value="Cash">
+                                <label >Cash</label>
+                                </div>
+        
+                                <div>
+                                <input type="radio" id="louie" name="drone" value="Different">
+                                <label >Different</label>
+                                </div>
+                               
+                        
+                        <h3 class="text-dark">Category:</h3>
+	                    
+                        <div >
+                                <input type="radio"  name="drone1" value="Food" checked>
+                                <label>Food</label>
+                                </div>
+        
+                                <div>
+                                <input type="radio"  name="drone1" value="Flat">
+                                <label>Flat</label>
+                                </div>
+        
+                                <div>
+                                <input type="radio"id="louie" name="drone1" value="Auto">
+                                <label >Auto</label>
+                                </div>
+                                <div>
+                                <input type="radio"  name="drone1" value="Allegro">
+                                <label >Allegro</label>
+                                </div>
+                                <div>
+                                    <input type="radio"  name="drone1" value="Restaurant" checked>
+                                    <label >Restaurant</label>
+                                    </div>
+            
+                                    <div>
+                                    <input type="radio"  name="drone1" value="Cinema">
+                                    <label >Cinema</label>
+                                    </div>
+            
+                                    <div>
+                                    <input type="radio" name="drone1" value="Fines">
+                                    <label >Fines</label>
+                                    </div>
+                                    <div>
+                                    <input type="radio"  name="drone1" value="Different">
+                                    <label >Different</label>
+                                    </div>
+                                          
+                        <input class="mt-2"type="Comment" placeholder="Comment" name="outcomeComment">
                         <p class="mt-3">
                             <input type="submit" value="Save">
                             <a href="main_meni.php" class=""><input type="button" value="Cancel"></a>
                         </p>
-                        
-                        </div>
                         <?php 
                             if($_SESSION['udanyZapis']==true)
                             {
@@ -167,6 +198,7 @@ if(is_numeric($value))
                                 //$_SESSION['udanyZapis']=false;
                             }
                             ?>
+                        </div>
                     </div>
                 </div>
             </div>   
