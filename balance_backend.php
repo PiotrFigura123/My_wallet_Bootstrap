@@ -6,6 +6,24 @@ if(!isset($_SESSION['zalogowany']))
     header('Location:index.php');
     exit();
 }
+$userId=$_SESSION['idUser'];
+$startDate=$_POST['startDate'];
+$endDate=$_POST['endDate'];
+$wszystko_OK =true;
+
+if($startDate>0 && $endDate>0)
+{
+    if(($startDate)<($endDate))
+    echo $userId."</br>".$startDate."</br>".$endDate;
+    elseif(($startDate)>($endDate))
+    $_SESSION['e_date']="Data startowa po koncowej ";
+}
+else//($startDate>$endDate)
+{
+    $_SESSION['e_date']="Wybierz daty ";
+}
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -17,6 +35,49 @@ if(!isset($_SESSION['zalogowany']))
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
     <title>Balance2</title>
+    <script type ="text/javascript">
+        var dzisiaj=new Date();
+        var dzien=dzisiaj.getDate();
+        var miesiac = dzisiaj.getMonth()+1;
+        var rok = dzisiaj.getFullYear();
+        var aktualnaData =rok+'-'+miesiac+'-'+dzien;
+        var poczMiesiaca=rok+'-'+miesiac+'-'+"01";
+        var poczRoku = rok+"-"+"01"+"-"+"01";
+    function setDate(s1,d1,d2){
+        var s1=document.getElementById(s1);
+        var d1=document.getElementById(d1);
+        var d2=document.getElementById(d2);
+        //document.write(aktualnaData);
+            if(s1.value==1)
+        {
+            
+            d1.value=poczMiesiaca;
+            d2.value=aktualnaData;
+        }
+
+        else if(s1.value==2)
+        {
+            d1.value=poczRoku;
+            d2.value=aktualnaData;
+        }
+        else if(s1.value==3)
+        {
+            d1.value=aktualnaData;
+            d2.value=aktualnaData;
+        }
+
+    }
+
+    </script>
+    <style>
+        .error
+        {
+            color:red;
+            margin-top:10px;
+            margin-bottom:10px;
+            font-weight:bold;
+        }
+    </style>
 </head>
 <body class="bg-dark">
     
@@ -40,15 +101,27 @@ if(!isset($_SESSION['zalogowany']))
                         </h3>
                         <p class="card-text">
                             Choose period: 
-                            <select name="balane-menu" id="balane-menu">
-                                <option value="This month" name ="this_month">This month</option>
-                                <option value="This year" name ="this_year">This year</option>
-                                <option value="define" name ="define">define</option>
-                                </select>
+                            <select id="balance" name ="balance" onchange="setDate(this.id,'startDate','endDate')">
+                            <option value="" ></option>    
+                            <option value="1" >This month</option>
+                                <option value="2" >This year</option>
+                                <option value="3" >define</option>
+                            </select>
+                                
                         </p>
+                        <?php
+                        if(isset($_SESSION['e_date']))
+                        {
+                            echo '<div class="error">'.$_SESSION['e_date'].'</div';
+                            unset($_SESSION['e_date']);
+                           
+                        }
+                        ?>
                         <p class="card-text">
-                            <input type="date">
-                            <input type="date">
+                           
+                            <input type="date" id ="startDate" name ="startDate">
+                            <input type="date" id ="endDate" name ="endDate">
+
                         </p>
                         <a href="#" class="btn btn-dark">Display</a>
                         </div>
