@@ -14,7 +14,48 @@ $wszystko_OK =true;
 if($startDate>0 && $endDate>0)
 {
     if(($startDate)<($endDate))
-    echo $userId."</br>".$startDate."</br>".$endDate;
+    {
+        echo $userId."</br>".$startDate."</br>".$endDate;
+
+        require_once("connect.php");
+        mysqli_report(MYSQLI_REPORT_STRICT);
+
+    try{
+      $polaczenie1 = new mysqli($host,$db_user,$db_password,$db_name);
+      if($polaczenie1->connect_errno!=0)
+      {
+          throw new Exception(mysqli_connect_errno());
+      }
+    
+      
+      else
+      {
+    
+        if($wszystko_OK==true)
+            {
+
+                //wsystko zalicone, dodajemy do bazy
+                $sqlincome = "SELECT * FROM `bilans` WHERE `userId`=$userId AND (`date` BETWEEN '$startDate' AND '$endDate')";
+                $result = mysqli_query($polaczenie1,$sqlincome);
+                $incomes = mysqli_fetch_all($result,MYSQLI_ASSOC);
+                mysqli_free_result($result);
+                print_r($incomes);
+
+            }
+            $polaczenie1->close();
+      }
+    
+    }
+    catch(Exception $I)
+      {
+        echo '<span style="color:red;">"Blad serwera, poprosimy orejestracje w innym terminie"</span>';
+        echo '</br>';
+      }
+    }
+    
+
+
+
     elseif(($startDate)>($endDate))
     $_SESSION['e_date']="Data startowa po koncowej ";
 }
