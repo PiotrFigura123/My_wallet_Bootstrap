@@ -9,10 +9,16 @@ if(!isset($_SESSION['zalogowany']))
 $userId=$_SESSION['idUser'];
 $_SESSION['udanaEdycjaIncome']=false;
 $_SESSION['udanaEdycjaOutcome']=false;
-$_SESSION['udanaKasacja']=false;
+$_SESSION['udanaKasacjaOutcome']=false;
+$_SESSION['udanaKasacjaIncome']=false;
 $wszystko_OK =true;
-$endDate=$_POST['endDate'];
-$startDate=$_POST['startDate'];
+if(isset($_POST['endDate']))
+$_SESSION['endDate']=$_POST['endDate'];
+
+if(isset($_POST['startDate']))
+$_SESSION['startDate']=$_POST['startDate'];
+$endDate = $_SESSION['endDate'];
+$startDate=$_SESSION['startDate'];
 if($startDate>0 && $endDate>0)
 {
     if(($startDate)<($endDate))
@@ -165,6 +171,7 @@ else//($startDate>$endDate)
       <div class="modal-body">
          <!--BODY-->
          <input type="hidden" name ="incomeId" id ="incomeId">
+         
                 <div class="row mb-3">
                 
                     <label  class="col-sm-2 col-form-label">Value</label>
@@ -486,6 +493,12 @@ else//($startDate>$endDate)
                         if($_SESSION['udanaEdycjaIncome']==true)
                         {
                             echo "Udana edycja";
+                            $_SESSION['udanaEdycjaIncome']=false;
+                        }
+                        if($_SESSION['udanaKasacjaIncome']==true)
+                        {
+                            echo "Udana kasacja";
+                            $_SESSION['udanaKasacjaIncome']=false;
                         }
                         ?>
                         </div>
@@ -544,8 +557,16 @@ else//($startDate>$endDate)
                         if($_SESSION['udanaEdycjaOutcome']==true)
                         {
                             echo "Udana edycja";
+                            $_SESSION['udanaEdycjaOutcome']=false;
+                        }
+                        if($_SESSION['udanaKasacjaOutcome']==true)
+                        {
+                            echo "Udana kasacja";
+                            $_SESSION['udanaKasacjaOutcome']=false;
                         }
                         ?>
+                        
+                        
                         </div>
                     </div>
                 </div>
@@ -621,6 +642,7 @@ else//($startDate>$endDate)
            $('#updateIncomeDate').val(data[2]);
            $('#updateIncomeFrom').val(data[3]);
            $('#updateIncomeComment').val(data[4]);
+           
            
         });
     });
