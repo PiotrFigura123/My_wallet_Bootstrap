@@ -1,7 +1,7 @@
 <?php
 
 session_start();
-
+$_SESSION['udanaEdycjaUsera']=false;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -33,11 +33,11 @@ session_start();
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <form action="PHPEditUserData.php" method="POST">
-          
+      
       <div class="modal-body">
          <!--BODY-->
          
-         <form  method="post">
+         
     
                         <label for="nick" class="form-label">Name:</label>
                         <div class="input-group mb-2">
@@ -104,7 +104,7 @@ session_start();
                             </span>
                         <input type="password" class="form-control"name ="haslo2">
                         </div>
-                    </form>
+                    
 
 
         <!--BODY-->
@@ -185,6 +185,14 @@ session_start();
                             <button type="button" class="btn btn-primary editUserData" >
                             Settings
                             </button>  
+                            <?php 
+                        if($_SESSION['udanaEdycjaUsera']==true)
+                        {
+                            echo "Udana edycja";
+                            $_SESSION['udanaEdycjaUsera']=false;
+                        }
+                       
+                        ?>
                             </h3>
                             </div>
                         </div>
