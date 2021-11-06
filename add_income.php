@@ -44,7 +44,7 @@ if(!isset($_SESSION['zalogowany']))
                             
                         </h3>
                         <p class="card-text">
-                            <input type="value" placeholder="Value" name ="valueForm">
+                            <input type="value" placeholder="Value" name ="valueForm" >
                         </p>
                         <p class="card-text">
                             <input type="date" name ="incomeDate">

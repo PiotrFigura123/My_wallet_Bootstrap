@@ -1,6 +1,6 @@
 <?php
 session_start();
-if(isset($_POST['valueForm']))
+if(isset($_POST['valueForm']) && $_POST['incomeDate']>1)
 {
 
 $userId=$_SESSION['idUser'];
@@ -12,12 +12,6 @@ $comment=$_POST['incomeComment'];
 $wszystko_OK =true;
 //echo $value."</br>".$userId;
 
-/*if(is_float($value))
-    {
-      $wszystko_OK=false;
-      $_SESSION['e_value']='Nie jest liczba';
-    }
-*/
 
 if(is_numeric($value))
   {
@@ -34,7 +28,7 @@ if(is_numeric($value))
       
       else
       {
-    
+        
         if($wszystko_OK==true)
             {
                 //wsystko zalicone, dodajemy do bazy
@@ -70,6 +64,10 @@ if(is_numeric($value))
     //$wszystko_OK = false;
     $_SESSION['e_value']="nie jest to float ";
   }
+}
+else
+{
+    $_SESSION['e_date']="wybierz date";
 }
 ?>
 
@@ -130,6 +128,15 @@ if(is_numeric($value))
                         <p class="card-text">
                             <input type="date" name ="incomeDate">
                         </p>
+
+                        <?php
+                        if(isset($_SESSION['e_date']))
+                        {
+                            echo '<div class="error">'.$_SESSION['e_date'].'</div';
+                            unset($_SESSION['e_date']);
+                            $_SESSION['udanyZapis']=false;
+                        }
+                        ?>
                             
                         <h3>Select category:</h3>
 	                    
