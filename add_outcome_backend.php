@@ -1,6 +1,6 @@
 <?php
 session_start();
-if(isset($_POST['outcomeValue']))
+if(isset($_POST['outcomeValue']) && $_POST['outcomeDate']>1)
 {
 
 $userId=$_SESSION['idUser'];
@@ -48,6 +48,8 @@ if(is_numeric($value))
                 else
                 throw new Exception($polaczenie1->error);
             }
+
+            
             $polaczenie1->close();
       }
     
@@ -71,6 +73,10 @@ if(is_numeric($value))
     //$wszystko_OK = false;
     $_SESSION['e_value']="nie jest to float ";
   }
+}
+else
+{
+    $_SESSION['e_date']="wybierz date";
 }
 ?>
 
@@ -128,6 +134,14 @@ if(is_numeric($value))
                         <p class="card-text">
                             <input type="date" name="outcomeDate">
                         </p>
+                        <?php
+                        if(isset($_SESSION['e_date']))
+                        {
+                            echo '<div class="error">'.$_SESSION['e_date'].'</div';
+                            unset($_SESSION['e_date']);
+                            $_SESSION['udanyZapis']=false;
+                        }
+                        ?>
                             
                         <h3>Payment by:</h3>
 	                    

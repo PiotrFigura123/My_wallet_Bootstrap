@@ -22,7 +22,11 @@ if(!isset($_SESSION['zalogowany']))
     <script type ="text/javascript">
         var dzisiaj=new Date();
         var dzien=dzisiaj.getDate();
+        if(dzien<10)
+        dzien="0"+dzien;
         var miesiac = dzisiaj.getMonth()+1;
+        if(miesiac<10)
+        miesiac="0"+miesiac;
         var rok = dzisiaj.getFullYear();
         var aktualnaData =rok+'-'+miesiac+'-'+dzien;
         var poczMiesiaca=rok+'-'+miesiac+'-'+"01";
@@ -37,6 +41,7 @@ if(!isset($_SESSION['zalogowany']))
             
             d1.value=poczMiesiaca;
             d2.value=aktualnaData;
+            
         }
 
         else if(s1.value==2)
@@ -92,7 +97,7 @@ if(!isset($_SESSION['zalogowany']))
                             <input type="date" id ="endDate" name ="endDate">
 
                         </p>
-                        
+                    
                         <p class="mt-3">
                             <input type="submit" value="Display">
                             <a href="main_meni.php" class=""><input type="button" value="Cancel"></a>
