@@ -1,3 +1,8 @@
+<?php
+
+session_start();
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -39,7 +44,7 @@
                             <span class="input-group-text">
                                 <i class="bi bi-person-fill"></i>
                             </span>
-                        <input type="text" class="form-control" name="nick" value=<?php echo $_SESSION['name'];?>>
+                        <input type="text" class="form-control" name="nick" value=<?php echo $_SESSION['user'];?>>
                         </div>
                         <?php
                         if(isset($_SESSION['e_nick']))
@@ -54,7 +59,7 @@
                                 <i class="bi bi-person-fill"></i>
                             </span>
                         
-                        <input type="text" class="form-control" name="surename" placeholder="e.g.Mario">
+                        <input type="text" class="form-control" name="surename" value =<?php echo $_SESSION['nazwisko']?>>
                         </div>
                         <?php
                         if(isset($_SESSION['e_nick']))
@@ -68,7 +73,7 @@
                             <span class="input-group-text">
                                 <i class="bi bi-envelope-fill"></i>
                             </span>
-                        <input type="email" class="form-control" name="email" placeholder="example@wp.pl">
+                        <input type="email" class="form-control" name="email" value =<?php echo $_SESSION['Email']?>>
                         </div>
                         <?php
                         if(isset($_SESSION['e_email']))
