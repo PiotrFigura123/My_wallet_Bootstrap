@@ -14,7 +14,7 @@ try{
             $id=$_POST['delete_outcomeId'];  
                if($polaczenie1->query("DELETE FROM bilans WHERE balanceId=$id"))              
                 {                  
-                    $_SESSION['udanaKasacja']=true;
+                    $_SESSION['udanaKasacjaOutcome']=true;
                     echo $id;
                     header('Location:balance_backend.php');                  
                 }
@@ -27,7 +27,7 @@ try{
             $id=$_POST['delete_incomeId'];    
                if($polaczenie1->query("DELETE FROM bilans WHERE balanceId=$id"))              
                 {                  
-                    $_SESSION['udanaKasacja']=true;
+                    $_SESSION['udanaKasacjaIncome']=true;
                     echo $id;
                     header('Location:balance_backend.php');                   
                 }
