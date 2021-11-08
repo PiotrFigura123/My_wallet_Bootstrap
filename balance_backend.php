@@ -11,6 +11,7 @@ $_SESSION['udanaEdycjaIncome']=false;
 $_SESSION['udanaEdycjaOutcome']=false;
 $_SESSION['udanaKasacjaOutcome']=false;
 $_SESSION['udanaKasacjaIncome']=false;
+$_SESSION['udanaWdycjaWartosci']=true;
 $wszystko_OK =true;
 if(isset($_POST['endDate']))
 $_SESSION['endDate']=$_POST['endDate'];
@@ -67,6 +68,8 @@ if($startDate>0 && $endDate>0)
                 else
                     echo 'lipa';
             }
+            
+            
             $polaczenie1->close();
       }
     }
@@ -83,6 +86,7 @@ else//($startDate>$endDate)
 {
     $_SESSION['e_date']="Wybierz daty ";
 }
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -176,9 +180,10 @@ else//($startDate>$endDate)
                 
                     <label  class="col-sm-2 col-form-label">Value</label>
                     <div class="col-sm-10">
-                    <input type="text" name ="updatedIncomeValue" id ="updatedIncomeValue">
+                    <input type="value" name ="updatedIncomeValue" id ="updatedIncomeValue">
                     </div>
                 </div>
+               
                 <div class="row mb-3">
                     <label for="inputPassword3" class="col-sm-2 col-form-label">Date</label>
                     <div class="col-sm-10">
@@ -215,10 +220,17 @@ else//($startDate>$endDate)
         </div>
 
         <!--BODY-->
+        <?php
+        if($_SESSION['udanaWdycjaWartosci']=true)
+        {
+            
+        }
+        
+        ?>
         <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="submit" name ="saveEditedIncome" class="btn btn-primary">Save changes</button>
-        </div>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="submit" name ="saveEditedIncome" class="btn btn-primary">Save changes</button>
+            </div>
         </form>
     </div>
   </div>

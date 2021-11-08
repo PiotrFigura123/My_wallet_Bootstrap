@@ -16,7 +16,7 @@ if(isset($_POST['email']))
 
     //sprawdz nickname
     $nick=$_POST['nick'];
-    $surename=$_POST['surename'];
+    
     //sprawdzenie dlugoci nicka
     if((strlen($nick)<3)||(strlen($nick)>20))
     {
@@ -68,7 +68,7 @@ if(isset($_POST['email']))
         else
         {
 
-            $rezultat = $polaczenie->query("SELECT userId FROM logownie WHERE email='$email'");
+            $rezultat = $polaczenie->query("SELECT email FROM users WHERE email='$email'");
             
             if(!$rezultat) throw new Exception($polaczenie->error);
             $ile_takich_emaili=$rezultat->num_rows;
@@ -82,7 +82,7 @@ if(isset($_POST['email']))
             if($wszystko_OK==true)
         {
             //wsystko zalicone, dodajemy do bazy
-           if($polaczenie->query("INSERT INTO logownie VALUES(NULL,'$nick','$surename','$email','$haslo_hash')"))
+           if($polaczenie->query("INSERT INTO users VALUES(NULL,'$nick','$haslo_hash','$email')"))
             {
                 $_SESSION['udanarejestracja']=true;
                 header('Location:index.php');
@@ -163,21 +163,7 @@ if(isset($_POST['email']))
                             unset($_SESSION['e_nick']);
                         }
                         ?>
-                         <label for="surename" class="form-label">Surename:</label>
-                        <div class="input-group mb-2">
-                            <span class="input-group-text">
-                                <i class="bi bi-person-fill"></i>
-                            </span>
                         
-                        <input type="text" class="form-control" name="surename" placeholder="e.g.Mario">
-                        </div>
-                        <?php
-                        if(isset($_SESSION['e_nick']))
-                        {
-                            echo '<div class="error">'.$_SESSION['e_nick'].'</div';
-                            unset($_SESSION['e_nick']);
-                        }
-                        ?>
                         <label for="email" class="form-label">Email adress:</label>
                         <div class="mb-2 input-group">
                             <span class="input-group-text">
