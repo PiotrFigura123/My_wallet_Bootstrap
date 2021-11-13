@@ -1,6 +1,8 @@
 <?php
 
 session_start();
+$user_id=$_SESSION['$idUser'];
+
 
 if(!isset($_SESSION['zalogowany']))
 {
@@ -41,7 +43,6 @@ if(!isset($_SESSION['zalogowany']))
                         <h3 class="card-title mb-3">
                             
                             Income
-                            
                         </h3>
                         <p class="card-text">
                             <input type="value" placeholder="Value" name ="valueForm" >
@@ -49,27 +50,42 @@ if(!isset($_SESSION['zalogowany']))
                         <p class="card-text">
                             <input type="date" name ="incomeDate">
                         </p>
-                            
+                        
+
+<?php
+
+
+require_once "connect.php";
+$polaczenie = @new mysqli($host,$db_user,$db_password,$db_name);
+
+if($polaczenie->connect_errno!=0)
+{
+    echo "Error".$polaczenie ->connect_erno;
+}else
+{
+$rezultatt=@$polaczenie->query
+("SELECT name FROM incomes_category_assigned_to_users WHERE user_id='$user_id'");
+$ilu_userow = $rezultatt->num_rows;
+
+$incomeSQL=$polaczenie->query("SELECT name FROM incomes_category_assigned_to_users WHERE user_id='$user_id'");
+$rows=mysqli_fetch_array($incomeSQL);
+
+}
+?>
                         <h3>Select category:</h3>
-	                    
+	                    <?php
+                            while($rows=mysqli_fetch_array($incomeSQL))
+                            {                   
+                        ?>
                         <div>
-                        <input type="radio" id="huey" name="drone" value="Salary" checked>
-                        <label>Salary</label>
+                        <input type="radio" id="huey" name="drone" value="<?php echo $rows['name'];?>" checked>
+                        <label><?php echo $rows['name'];?></label>
                         </div>
-
-                        <div>
-                        <input type="radio" id="dewey" name="drone" value="Bank transation">
-                        <label >Bank transation</label>
-                        </div>
-
-                        <div>
-                        <input type="radio" id="louie" name="drone" value="Allegro">
-                        <label>Allegro</label>
-                        </div>
-                        <div>
-                        <input type="radio" id="louie" name="drone" value="Different">
-                        <label>Different</label>
-                        </div>
+                        <?php
+                           }
+                           $polaczenie->close();                       
+                        ?>  
+                        
 
                         <input type="Comment" placeholder="Comment"name ="incomeComment">
                         <p class="mt-3">

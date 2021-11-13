@@ -22,8 +22,8 @@ else
                 if(password_verify($haslo,$wiersz['password']))
                 {
                     $_SESSION['zalogowany']=true;
-                    $_SESSION['idUser']=$wiersz['userId'];
-                    $_SESSION['user']=$wiersz['name'];
+                    $_SESSION['$idUser']=$wiersz['id'];
+                    $_SESSION['user']=$wiersz['username'];
                     $_SESSION['Email']=$wiersz['email'];
                     unset($_SESSION['blad']);
                     $rezultat->free_result();

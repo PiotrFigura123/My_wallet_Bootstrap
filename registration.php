@@ -97,7 +97,7 @@ if(isset($_POST['email']))
 
                 $polaczenie->query("INSERT INTO payment_methods_assigned_to_users (user_id, name)
                 SELECT '$idUser',name FROM payment_methods_default;");
-
+                $rezultat->free_result();
                 $_SESSION['udanarejestracja']=true;
                 header('Location:index.php');
 

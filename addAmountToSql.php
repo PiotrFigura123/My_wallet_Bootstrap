@@ -24,15 +24,12 @@ if(is_numeric($value))
       {
           throw new Exception(mysqli_connect_errno());
       }
-    
-      
       else
       {
-        
         if($wszystko_OK==true)
             {
                 //wsystko zalicone, dodajemy do bazy
-               if($polaczenie1->query("INSERT INTO bilans VALUES(NULL,$userId,$value,'$date','$paymentMethod','','','$comment')"))
+               if($polaczenie1->query("INSERT INTO incomes VALUES(NULL,$userId,1,$value,'$date','$comment')"))
                
                 {
                     $_SESSION['udanyZapis']=true;
@@ -50,14 +47,6 @@ if(is_numeric($value))
         echo '<span style="color:red;">"Blad serwera, poprosimy orejestracje w innym terminie"</span>';
         echo '</br>';
       }
-      /*
-      if($wszystko_OK==true)
-        {
-            //wsystko zalicone, dodajemy do bazy
-            echo "Udana walidacja";
-            exit();
-        }*/
-    
   }
   else
   {

@@ -1,6 +1,7 @@
 <?php
 
 session_start();
+$user_id=$_SESSION['$idUser'];
 if(!isset($_SESSION['zalogowany']))
 {
     header('Location:index.php');
@@ -46,64 +47,68 @@ if(!isset($_SESSION['zalogowany']))
                         <p class="card-text">
                             <input type="date" name="outcomeDate">
                         </p>
-                            
+<?php
+require_once "connect.php";
+$polaczenie = @new mysqli($host,$db_user,$db_password,$db_name);
+
+if($polaczenie->connect_errno!=0)
+{
+    echo "Error".$polaczenie ->connect_erno;
+}else
+{
+$rezultatt=@$polaczenie->query
+("SELECT name FROM payment_methods_assigned_to_users WHERE user_id='$user_id'");
+$ilu_userow = $rezultatt->num_rows;
+
+$paidSQL=$polaczenie->query("SELECT name FROM payment_methods_assigned_to_users WHERE user_id='$user_id'");
+$rows=mysqli_fetch_array($paidSQL);
+}
+?>
                         <h3>Payment by:</h3>
-	                    
+	                    <?php
+                            while($rows=mysqli_fetch_array($paidSQL))
+                            {                   
+                        ?>
                                 <div>
-                                <input type="radio"  name="drone" value="Card" checked>
-                                <label>Card</label>
+                                <input type="radio"  name="drone" value="<?php echo $rows['name'];?>" checked>
+                                <label><?php echo $rows['name'];?></label>
                                 </div>
-        
-                                <div>
-                                <input type="radio"  name="drone" value="Cash">
-                                <label >Cash</label>
-                                </div>
-        
-                                <div>
-                                <input type="radio"  name="drone" value="Different">
-                                <label >Different</label>
-                                </div>
-                               
-                        
+                                <?php
+                           }
+                           $polaczenie->close();                       
+                        ?> 
+                                                              
+<?php
+require_once "connect.php";
+$polaczenie = @new mysqli($host,$db_user,$db_password,$db_name);
+
+if($polaczenie->connect_errno!=0)
+{
+    echo "Error".$polaczenie ->connect_erno;
+}else
+{
+$rezultatt=@$polaczenie->query
+("SELECT name FROM expenses_category_assigned_to_users WHERE user_id='$user_id'");
+$ilu_userow = $rezultatt->num_rows;
+
+$outcomeSQL=$polaczenie->query("SELECT name FROM expenses_category_assigned_to_users WHERE user_id='$user_id'");
+$rows=mysqli_fetch_array($outcomeSQL);
+}
+?>
                         <h3 class="text-dark">Category:</h3>
 	                    
+                        <?php
+                            while($rows=mysqli_fetch_array($outcomeSQL))
+                            {                   
+                        ?>
                             <div >
-                                <input type="radio" name="drone1" value="Food" checked>
-                                <label>Food</label>
+                                <input type="radio" name="drone1" value="<?php echo $rows['name'];?>" checked>
+                                <label><?php echo $rows['name'];?></label>
                                 </div>
-        
-                                <div>
-                                <input type="radio"  name="drone1" value="Flat">
-                                <label>Flat</label>
-                                </div>
-        
-                                <div>
-                                <input type="radio"  name="drone1" value="Auto">
-                                <label >Auto</label>
-                                </div>
-                                <div>
-                                <input type="radio"  name="drone1" value="Allegro">
-                                <label >Allegro</label>
-                                </div>
-                                <div>
-                                    <input type="radio" name="drone1" value="Restaurant" checked>
-                                    <label >Restaurant</label>
-                                    </div>
-            
-                                    <div>
-                                    <input type="radio"  name="drone1" value="Cinema">
-                                    <label >Cinema</label>
-                                    </div>
-            
-                                    <div>
-                                    <input type="radio"  name="drone1" value="Fines">
-                                    <label >Fines</label>
-                                    </div>
-                                    <div>
-                                    <input type="radio"  name="drone1" value="Different">
-                                    <label >Different</label>
-                                    </div>
-                                           
+                                <?php
+                           }
+                           $polaczenie->close();                       
+                        ?> 
                         <input class="mt-2"type="Comment" placeholder="Comment" name="outcomeComment">
                         <p class="mt-3">
                             <input type="submit" value="Save">
