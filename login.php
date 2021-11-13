@@ -44,11 +44,13 @@ session_start();
                         <input type="password" class="form-control"name ="password">
                         </div>
                         
-                        <div class="mb-4 input-group">
-                            <input type="submit" class="form-control m-2 " value="Zaloguj sie">
-                            <input type="button" class="form-control m-2 " value="Cancel">
-                            
-                        </div>
+                        
+                        <p class="mt-3">
+                            <input type="submit" value="Log in">
+                            <a href="index.php" class=""><input type="button" value="Cancel"></a>
+                        </p>
+
+                        
                         
                        
                        

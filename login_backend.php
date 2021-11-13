@@ -1,9 +1,6 @@
 <?php
 
 session_start();
-
-
-
 require_once"connect.php";
 $polaczenie = @new mysqli($host,$db_user,$db_password,$db_name);
 
@@ -13,15 +10,10 @@ if($polaczenie->connect_errno!=0)
 }
 else
 {
-
-
     $email=$_POST['email'];
     $haslo=$_POST['password'];
-
-    
-
     if($rezultat=@$polaczenie->query(
-        sprintf("SELECT * FROM logownie WHERE email='%s'",mysqli_real_escape_string($polaczenie,$email))))
+        sprintf("SELECT * FROM users WHERE email='%s'",mysqli_real_escape_string($polaczenie,$email))))
     {
         $ilu_userow = $rezultat->num_rows;
             if($ilu_userow>0)
@@ -32,7 +24,6 @@ else
                     $_SESSION['zalogowany']=true;
                     $_SESSION['idUser']=$wiersz['userId'];
                     $_SESSION['user']=$wiersz['name'];
-                    $_SESSION['nazwisko']=$wiersz['surename'];
                     $_SESSION['Email']=$wiersz['email'];
                     unset($_SESSION['blad']);
                     $rezultat->free_result();

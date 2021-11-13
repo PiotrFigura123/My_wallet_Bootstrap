@@ -84,6 +84,20 @@ if(isset($_POST['email']))
             //wsystko zalicone, dodajemy do bazy
            if($polaczenie->query("INSERT INTO users VALUES(NULL,'$nick','$haslo_hash','$email')"))
             {
+                if($rezultat = $polaczenie->query("SELECT id FROM users ORDER BY id DESC LIMIT 1"))
+                {
+                    $wiersz=$rezultat->fetch_assoc();
+                    $idUser=$wiersz['id'];
+                }
+                $polaczenie->query("INSERT INTO incomes_category_assigned_to_users(user_id,name)
+                SELECT '$idUser',name FROM incomes_category_default;");
+                
+                $polaczenie->query("INSERT INTO expenses_category_assigned_to_users (user_id, name)
+                SELECT '$idUser',name FROM expenses_category_default;");
+
+                $polaczenie->query("INSERT INTO payment_methods_assigned_to_users (user_id, name)
+                SELECT '$idUser',name FROM payment_methods_default;");
+
                 $_SESSION['udanarejestracja']=true;
                 header('Location:index.php');
 
@@ -212,10 +226,13 @@ if(isset($_POST['email']))
                         ?>
                         <div class="g-recaptcha " data-sitekey="6LdgO9gcAAAAABT4mVvtiu5gxTaALya1ntbKUS91"></div>
                         <input type="submit" value="Send">
-                        <div class="mb-4 input-group">
-                            <input type="submit" class="form-control m-2 " value="Register">
-                            <input type="submit" class="form-control m-2 " value="Powrot">
-                        </div>
+
+                        <p class="mt-3">
+                            <input type="submit" value="Save">
+                            <a href="index.php" class=""><input type="button" value="Cancel"></a>
+                        </p>
+
+                        
 
                     </form>
                 </div>
