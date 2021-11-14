@@ -2,6 +2,7 @@
 
 session_start();
 $user_id=$_SESSION['$idUser'];
+
 if(!isset($_SESSION['zalogowany']))
 {
     header('Location:index.php');
@@ -66,7 +67,7 @@ $rows=mysqli_fetch_array($paidSQL);
 ?>
                         <h3>Payment by:</h3>
 	                    <?php
-                            while($rows=mysqli_fetch_array($paidSQL))
+                            do
                             {                   
                         ?>
                                 <div>
@@ -74,7 +75,7 @@ $rows=mysqli_fetch_array($paidSQL);
                                 <label><?php echo $rows['name'];?></label>
                                 </div>
                                 <?php
-                           }
+                           }while($rows=mysqli_fetch_array($paidSQL));
                            $polaczenie->close();                       
                         ?> 
                                                               
@@ -98,7 +99,7 @@ $rows=mysqli_fetch_array($outcomeSQL);
                         <h3 class="text-dark">Category:</h3>
 	                    
                         <?php
-                            while($rows=mysqli_fetch_array($outcomeSQL))
+                            do 
                             {                   
                         ?>
                             <div >
@@ -106,7 +107,7 @@ $rows=mysqli_fetch_array($outcomeSQL);
                                 <label><?php echo $rows['name'];?></label>
                                 </div>
                                 <?php
-                           }
+                           }while($rows=mysqli_fetch_array($outcomeSQL));
                            $polaczenie->close();                       
                         ?> 
                         <input class="mt-2"type="Comment" placeholder="Comment" name="outcomeComment">

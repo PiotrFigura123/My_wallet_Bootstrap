@@ -74,7 +74,7 @@ $rows=mysqli_fetch_array($incomeSQL);
 ?>
                         <h3>Select category:</h3>
 	                    <?php
-                            while($rows=mysqli_fetch_array($incomeSQL))
+                            do 
                             {                   
                         ?>
                         <div>
@@ -82,7 +82,7 @@ $rows=mysqli_fetch_array($incomeSQL);
                         <label><?php echo $rows['name'];?></label>
                         </div>
                         <?php
-                           }
+                           }while($rows=mysqli_fetch_array($incomeSQL));
                            $polaczenie->close();                       
                         ?>  
                         

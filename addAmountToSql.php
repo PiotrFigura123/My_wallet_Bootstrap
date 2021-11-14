@@ -1,18 +1,14 @@
 <?php
 session_start();
+$userId=$_SESSION['$idUser'];
 if(isset($_POST['valueForm']) && $_POST['incomeDate']>1)
 {
-
-$userId=$_SESSION['idUser'];
 $value=$_POST['valueForm'];
 $date=$_POST['incomeDate'];
 $paymentMethod=$_POST['drone'];
+
 $comment=$_POST['incomeComment'];
-
 $wszystko_OK =true;
-//echo $value."</br>".$userId;
-
-
 if(is_numeric($value))
   {
     require_once("connect.php");
@@ -28,8 +24,13 @@ if(is_numeric($value))
       {
         if($wszystko_OK==true)
             {
-                //wsystko zalicone, dodajemy do bazy
-               if($polaczenie1->query("INSERT INTO incomes VALUES(NULL,$userId,1,$value,'$date','$comment')"))
+                if($sqlIncomePaymentethodID=@$polaczenie1->query(
+                    "SELECT id FROM incomes_category_assigned_to_users WHERE user_id='$userId' AND name='$paymentMethod'"))
+                { 
+                    $wiersz=$sqlIncomePaymentethodID->fetch_assoc();
+                    $incomePaymentethodID=$wiersz['id'];
+                }    
+               if($polaczenie1->query("INSERT INTO incomes VALUES(NULL,$userId,$incomePaymentethodID,$value,'$date','$comment')"))
                
                 {
                     $_SESSION['udanyZapis']=true;
@@ -39,8 +40,7 @@ if(is_numeric($value))
                 throw new Exception($polaczenie1->error);
             }
             $polaczenie1->close();
-      }
-    
+      }  
     }
     catch(Exception $I)
       {
@@ -50,13 +50,12 @@ if(is_numeric($value))
   }
   else
   {
-    //$wszystko_OK = false;
     $_SESSION['e_value']="nie jest to float ";
   }
 }
 else
 {
-    $_SESSION['e_date']="wybierz date";
+$_SESSION['e_date']="wybierz date";
 }
 ?>
 
@@ -98,6 +97,7 @@ else
                             <div class="h1 mb-3">
                                 <i class="bi bi-cash-stack"></i>
                         </div>
+
                         <h3 class="card-title mb-3">
                             Income
                         </h3>
@@ -126,27 +126,40 @@ else
                             $_SESSION['udanyZapis']=false;
                         }
                         ?>
-                            
+                    <?php
+
+
+require_once "connect.php";
+$polaczenie = @new mysqli($host,$db_user,$db_password,$db_name);
+
+if($polaczenie->connect_errno!=0)
+{
+    echo "Error".$polaczenie ->connect_erno;
+}else
+{
+$rezultatt=@$polaczenie->query
+("SELECT name FROM incomes_category_assigned_to_users WHERE user_id='$userId'");
+$ilu_userow = $rezultatt->num_rows;
+
+$incomeSQL=$polaczenie->query("SELECT name FROM incomes_category_assigned_to_users WHERE user_id='$userId'");
+$rows=mysqli_fetch_array($incomeSQL);
+
+}
+?>
                         <h3>Select category:</h3>
-	                    
+	                    <?php
+                            do 
+                            {                   
+                        ?>
                         <div>
-                        <input type="radio" id="huey" name="drone" value="Salary" checked>
-                        <label>Salary</label>
+                        <input type="radio" id="huey" name="drone" value="<?php echo $rows['name'];?>" checked>
+                        <label><?php echo $rows['name'];?></label>
                         </div>
-
-                        <div>
-                        <input type="radio" id="dewey" name="drone" value="Bank transation">
-                        <label >Bank transation</label>
-                        </div>
-
-                        <div>
-                        <input type="radio" id="louie" name="drone" value="Allegro">
-                        <label>Allegro</label>
-                        </div>
-                        <div>
-                        <input type="radio" id="louie" name="drone" value="Different">
-                        <label>Different</label>
-                        </div>
+                        <?php
+                           }while($rows=mysqli_fetch_array($incomeSQL));
+                           $polaczenie->close();                       
+                        ?>  
+                        
 
                         <input type="Comment" placeholder="Comment"name ="incomeComment">
                         <p class="mt-3">

@@ -1,24 +1,16 @@
 <?php
 session_start();
+$userId=$_SESSION['$idUser'];
 if(isset($_POST['outcomeValue']) && $_POST['outcomeDate']>1)
 {
 
-$userId=$_SESSION['idUser'];
+
 $value=$_POST['outcomeValue'];
 $date=$_POST['outcomeDate'];
 $paymentMethod=$_POST['drone'];
 $paidFor=$_POST['drone1'];
 $comment=$_POST['outcomeComment'];
-
 $wszystko_OK =true;
-//echo $value."</br>".$userId;
-
-/*if(is_float($value))
-    {
-      $wszystko_OK=false;
-      $_SESSION['e_value']='Nie jest liczba';
-    }
-*/
 
 if(is_numeric($value))
   {
@@ -31,15 +23,28 @@ if(is_numeric($value))
       {
           throw new Exception(mysqli_connect_errno());
       }
-    
-      
       else
       {
     
         if($wszystko_OK==true)
             {
+                if($sqlexpenses_category_assigned_to_users=@$polaczenie1->query(
+                    "SELECT id FROM expenses_category_assigned_to_users WHERE user_id='$userId' AND name='$paidFor'"))
+                { 
+                    $wiersz=$sqlexpenses_category_assigned_to_users->fetch_assoc();
+                    $expenses_category_assigned_to_users=$wiersz['id'];
+                } 
+                
+ 
+                if($sqlpayment_methods_assigned_to_users=@$polaczenie1->query(
+                    "SELECT id FROM payment_methods_assigned_to_users WHERE user_id='$userId' AND name='$paymentMethod'"))
+                { 
+                    $wiersz=$sqlpayment_methods_assigned_to_users->fetch_assoc();
+                    $payment_methods_assigned_to_users=$wiersz['id'];
+                } 
+                
                 //wsystko zalicone, dodajemy do bazy
-               if($polaczenie1->query("INSERT INTO bilans VALUES(NULL,$userId,$value,'$date','','$paymentMethod','$paidFor','$comment')"))
+               if($polaczenie1->query("INSERT INTO expenses VALUES(NULL,$userId,$expenses_category_assigned_to_users,$payment_methods_assigned_to_users,$value,'$date','$comment')"))
                
                 {
                     $_SESSION['udanyZapis']=true;
@@ -59,24 +64,15 @@ if(is_numeric($value))
         echo '<span style="color:red;">"Blad serwera, poprosimy orejestracje w innym terminie"</span>';
         echo '</br>';
       }
-      /*
-      if($wszystko_OK==true)
-        {
-            //wsystko zalicone, dodajemy do bazy
-            echo "Udana walidacja";
-            exit();
-        }
-    */
   }
   else
   {
-    //$wszystko_OK = false;
     $_SESSION['e_value']="nie jest to float ";
   }
 }
 else
 {
-    $_SESSION['e_date']="wybierz date";
+$_SESSION['e_date']="wybierz date";
 }
 ?>
 
@@ -142,66 +138,78 @@ else
                             $_SESSION['udanyZapis']=false;
                         }
                         ?>
+
+
+                        <?php
+require_once "connect.php";
+$polaczenie = @new mysqli($host,$db_user,$db_password,$db_name);
+
+if($polaczenie->connect_errno!=0)
+{
+    echo "Error".$polaczenie ->connect_erno;
+}else
+{
+$rezultatt=@$polaczenie->query
+("SELECT name FROM payment_methods_assigned_to_users WHERE user_id='$userId'");
+$ilu_userow = $rezultatt->num_rows;
+
+$paidSQL=$polaczenie->query("SELECT name FROM payment_methods_assigned_to_users WHERE user_id='$userId'");
+$rows=mysqli_fetch_array($paidSQL);
+}
+?>
                             
                         <h3>Payment by:</h3>
 	                    
+                        <?php
+                            do
+                            {                   
+                        ?>
                                 <div>
-                                <input type="radio" id="huey" name="drone" value="Card" checked>
-                                <label>Card</label>
+                                <input type="radio"  name="drone" value="<?php echo $rows['name'];?>" checked>
+                                <label><?php echo $rows['name'];?></label>
                                 </div>
-        
-                                <div>
-                                <input type="radio" id="dewey" name="drone" value="Cash">
-                                <label >Cash</label>
-                                </div>
-        
-                                <div>
-                                <input type="radio" id="louie" name="drone" value="Different">
-                                <label >Different</label>
-                                </div>
+                                <?php
+                           }while($rows=mysqli_fetch_array($paidSQL));
+                          $polaczenie->close();     
+                          ?>                  
+                        
+                        <?php
+require_once "connect.php";
+$polaczenie = @new mysqli($host,$db_user,$db_password,$db_name);
+
+if($polaczenie->connect_errno!=0)
+{
+    echo "Error".$polaczenie ->connect_erno;
+}else
+{
+$rezultatt=@$polaczenie->query
+("SELECT name FROM expenses_category_assigned_to_users WHERE user_id='$userId'");
+$ilu_userow = $rezultatt->num_rows;
+
+$outcomeSQL=$polaczenie->query("SELECT name FROM expenses_category_assigned_to_users WHERE user_id='$userId'");
+$rows=mysqli_fetch_array($outcomeSQL);
+}
+?>
                                
                         
-                        <h3 class="text-dark">Category:</h3>
+                               <h3 class="text-dark">Category:</h3>
 	                    
-                        <div >
-                                <input type="radio"  name="drone1" value="Food" checked>
-                                <label>Food</label>
+                        <?php
+                            do 
+                            {                   
+                        ?>
+                            <div >
+                                <input type="radio" name="drone1" value="<?php echo $rows['name'];?>" checked>
+                                <label><?php echo $rows['name'];?></label>
                                 </div>
-        
-                                <div>
-                                <input type="radio"  name="drone1" value="Flat">
-                                <label>Flat</label>
-                                </div>
-        
-                                <div>
-                                <input type="radio"id="louie" name="drone1" value="Auto">
-                                <label >Auto</label>
-                                </div>
-                                <div>
-                                <input type="radio"  name="drone1" value="Allegro">
-                                <label >Allegro</label>
-                                </div>
-                                <div>
-                                    <input type="radio"  name="drone1" value="Restaurant" checked>
-                                    <label >Restaurant</label>
-                                    </div>
-            
-                                    <div>
-                                    <input type="radio"  name="drone1" value="Cinema">
-                                    <label >Cinema</label>
-                                    </div>
-            
-                                    <div>
-                                    <input type="radio" name="drone1" value="Fines">
-                                    <label >Fines</label>
-                                    </div>
-                                    <div>
-                                    <input type="radio"  name="drone1" value="Different">
-                                    <label >Different</label>
-                                    </div>
+                                <?php
+                           }while($rows=mysqli_fetch_array($outcomeSQL));
+                           $polaczenie->close();                       
+                        ?> 
                                           
                         <input class="mt-2"type="Comment" placeholder="Comment" name="outcomeComment">
                         <p class="mt-3">
+                           
                             <input type="submit" value="Save">
                             <a href="main_meni.php" class=""><input type="button" value="Cancel"></a>
                         </p>

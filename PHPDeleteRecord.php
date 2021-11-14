@@ -12,7 +12,7 @@ try{
         if(isset($_POST['deleteOutcome']))
         {
             $id=$_POST['delete_outcomeId'];  
-               if($polaczenie1->query("DELETE FROM bilans WHERE balanceId=$id"))              
+               if($polaczenie1->query("DELETE FROM expenses WHERE id=$id"))              
                 {                  
                     $_SESSION['udanaKasacjaOutcome']=true;
                     echo $id;
@@ -25,7 +25,7 @@ try{
         if(isset($_POST['deleteIncome']))
         {
             $id=$_POST['delete_incomeId'];    
-               if($polaczenie1->query("DELETE FROM bilans WHERE balanceId=$id"))              
+               if($polaczenie1->query("DELETE FROM incomes WHERE id=$id"))              
                 {                  
                     $_SESSION['udanaKasacjaIncome']=true;
                     echo $id;

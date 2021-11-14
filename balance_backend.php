@@ -1,12 +1,13 @@
 <?php
 
 session_start();
+$user_id=$_SESSION['$idUser'];
 if(!isset($_SESSION['zalogowany']))
 {
     header('Location:index.php');
     exit();
 }
-$userId=$_SESSION['idUser'];
+$userId=$_SESSION['$idUser'];
 $_SESSION['udanaEdycjaIncome']=false;
 $_SESSION['udanaEdycjaOutcome']=false;
 $_SESSION['udanaKasacjaOutcome']=false;
@@ -38,12 +39,12 @@ if($startDate>0 && $endDate>0)
         if($wszystko_OK==true)
             {
                 //wsystko zalicone, dodajemy do bazy
-                $sqlIncome = "SELECT * FROM `bilans` WHERE `userId`=$userId AND (`date` BETWEEN '$startDate' AND '$endDate') AND `incomeFrom`<>'' ORDER BY `date` ";
+                $sqlIncome = "SELECT * FROM incomes WHERE `user_id`=$userId AND (date_of_income BETWEEN '$startDate' AND '$endDate')";
                 $resultIncome = mysqli_query($polaczenie1,$sqlIncome);
                 $incomes = mysqli_fetch_all($resultIncome,MYSQLI_ASSOC);
                 mysqli_free_result($resultIncome);
                 //print_r($incomes);
-                $sqlOutcome = "SELECT * FROM `bilans` WHERE `userId`=$userId AND (`date` BETWEEN '$startDate' AND '$endDate') AND `incomeFrom`='' ORDER BY `date` ";
+                $sqlOutcome = "SELECT * FROM expenses WHERE `user_id`=$userId AND (`date_of_expense` BETWEEN '$startDate' AND '$endDate')";
                 $resultOutcome = mysqli_query($polaczenie1,$sqlOutcome);
                 $outcomes = mysqli_fetch_all($resultOutcome,MYSQLI_ASSOC);
                 mysqli_free_result($resultOutcome);
@@ -176,48 +177,51 @@ else//($startDate>$endDate)
          <!--BODY-->
          <input type="hidden" name ="incomeId" id ="incomeId">
          
-                <div class="row mb-3">
-                
-                    <label  class="col-sm-2 col-form-label">Value</label>
-                    <div class="col-sm-10">
-                    <input type="value" name ="updatedIncomeValue" id ="updatedIncomeValue">
-                    </div>
-                </div>
-               
-                <div class="row mb-3">
-                    <label for="inputPassword3" class="col-sm-2 col-form-label">Date</label>
-                    <div class="col-sm-10">
-                    <input type="date" name ="updateIncomeDate" id ="updateIncomeDate">
-                    </div>
-                </div>
-                <h3>Select category:</h3>
-	                    
-                        <div>
-                        <input type="radio" id="huey" name="drone" value="Salary" checked>
-                        <label>Salary</label>
-                        </div>
-
-                        <div>
-                        <input type="radio" id="dewey" name="drone" value="Bank transation">
-                        <label >Bank transation</label>
-                        </div>
-
-                        <div>
-                        <input type="radio" id="louie" name="drone" value="Allegro">
-                        <label>Allegro</label>
-                        </div>
-                        <div>
-                        <input type="radio" id="louie" name="drone" value="Different">
-                        <label>Different</label>
-                        </div>  
-                <div class="row mb-3">
-                    <label for="inputEmail3" class="col-sm-2 col-form-label">Comment</label>
-                    <div class="col-sm-10">
-                    <input type="value" name ="updateIncomeComment" id="updateIncomeComment">
-                    </div>
-                </div>
+         <div class="container">
+                        <p class="card-text">
+                            <input type="value" placeholder="Value" name ="updatedIncomeValue" id="updatedIncomeValue" >
+                        </p>
+                        <p class="card-text">
+                            <input type="date" name ="updateIncomeDate" id="updateIncomeDate">
+                        </p>
                         
-        </div>
+
+                        <?php
+                        require_once "connect.php";
+                        $polaczenie = @new mysqli($host,$db_user,$db_password,$db_name);
+                        if($polaczenie->connect_errno!=0)
+                        {
+                            echo "Error".$polaczenie ->connect_erno;
+                        }else
+                        {
+                        $rezultatt=@$polaczenie->query
+                        ("SELECT name FROM incomes_category_assigned_to_users WHERE user_id='$user_id'");
+                        $ilu_userow = $rezultatt->num_rows;
+
+                        $incomeSQL=$polaczenie->query("SELECT name FROM incomes_category_assigned_to_users WHERE user_id='$user_id'");
+                        $rows=mysqli_fetch_array($incomeSQL);
+                        }
+                        ?>
+                        <h3>Select category:</h3>
+	                    <?php
+                            do 
+                            {                   
+                        ?>
+                        <div>
+                        <input type="radio" id="drone" name="drone" value="<?php echo $rows['name'];?>" checked>
+                        <label><?php echo $rows['name'];?></label>
+                        </div>
+                        <?php
+                           }while($rows=mysqli_fetch_array($incomeSQL));
+                           $polaczenie->close();                       
+                        ?>  
+                        
+
+                        <input type="text" placeholder="Comment"name ="updateIncomeComment" id ="updateIncomeComment">
+                        
+                        </div>
+                    </div>
+           
 
         <!--BODY-->
         <?php
@@ -251,107 +255,77 @@ else//($startDate>$endDate)
           
       <div class="modal-body">
          <!--BODY-->
+
+
+
          <input type="hidden" name ="outcomeId" id ="outcomeId">
-                <div class="row mb-3">
-                
-                    <label  class="col-sm-2 col-form-label">Value</label>
-                    <div class="col-sm-10">
-                    <input type="text" name ="updatedOutcomeValue" id ="updatedOutcomeValue">
-                    </div>
-                </div>
-                <div class="row mb-3">
-                    <label for="inputPassword3" class="col-sm-2 col-form-label">Date</label>
-                    <div class="col-sm-10">
-                    <input type="date" name ="updateOutcomeDate" id ="updateOutcomeDate">
-                    </div>
-                </div>
+         <div class="container ">
+                        <p class="card-text">
+                            <input type="value" placeholder="Value" name="updatedOutcomeValue" id="updatedOutcomeValue">
+                        </p>
+                        <p class="card-text">
+                            <input type="date" name="updateOutcomeDate" id="updateOutcomeDate">
+                        </p>
+                            <?php
+                            require_once "connect.php";
+                            $polaczenie = @new mysqli($host,$db_user,$db_password,$db_name);
 
-                <fieldset class="row mb-3">
-                    <legend class="col-form-label col-sm-2 pt-0">Paid By</legend>
-                    <div class="col-sm-10">
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="updateOutcomePaidBy"  value="Card" >
-                        <label class="form-check-label" >
-                        Card
-                        </label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="updateOutcomePaidBy" value="Cash">
-                        <label class="form-check-label" >
-                        Cash
-                        </label>
-                    </div>
-                    <div class="form-check disabled">
-                        <input class="form-check-input" type="radio" name="updateOutcomePaidBy" value="Different" >
-                        <label class="form-check-label" >
-                        Different
-                        </label>
-                    </div>
-                    </div>
-                </fieldset>
+                            if($polaczenie->connect_errno!=0)
+                            {
+                                echo "Error".$polaczenie ->connect_erno;
+                            }else
+                            {
+                            $rezultatt=@$polaczenie->query
+                            ("SELECT name FROM payment_methods_assigned_to_users WHERE user_id='$user_id'");
+                            $ilu_userow = $rezultatt->num_rows;
 
-                <fieldset class="row mb-3">
-                    <legend class="col-form-label col-sm-2 pt-0">Paid for</legend>
-                    <div class="col-sm-10">
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="gridRadios1"  value="Food">
-                        <label class="form-check-label" >
-                        Food
-                        </label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="gridRadios1"  value="Flat">
-                        <label class="form-check-label" >
-                        Flat
-                        </label>
-                    </div>
-                    <div class="form-check disabled">
-                        <input class="form-check-input" type="radio" name="gridRadios1"  value="Auto" >
-                        <label class="form-check-label" >
-                        Auto
-                        </label>
-                    </div>
-                    <div class="form-check disabled">
-                        <input class="form-check-input" type="radio" name="gridRadios1"  value="Allegro" >
-                        <label class="form-check-label" >
-                        Allegro
-                        </label>
-                    </div>
-                    <div class="form-check disabled">
-                        <input class="form-check-input" type="radio" name="gridRadios1"  value="Restaurant">
-                        <label class="form-check-label" >
-                        Restaurant
-                        </label>
-                    </div>
-                    <div class="form-check disabled">
-                        <input class="form-check-input" type="radio" name="gridRadios1"  value="Cinema">
-                        <label class="form-check-label" >
-                        Cinema
-                        </label>
-                    </div>
-                    <div class="form-check disabled">
-                        <input class="form-check-input" type="radio" name="gridRadios1"  value="Fines">
-                        <label class="form-check-label" >
-                        Fines
-                        </label>
-                    </div>
-                    <div class="form-check disabled">
-                        <input class="form-check-input" type="radio" name="gridRadios1"  value="Different" >
-                        <label class="form-check-label" >
-                        Different
-                        </label>
-                    </div>
-                    </div>
-                </fieldset>
-                  
-                <div class="row mb-3">
-                    <label for="inputEmail3" class="col-sm-2 col-form-label">Comment</label>
-                    <div class="col-sm-10">
-                    <input type="value" name ="updateOutcomeComment" id="updateOutcomeComment">
-                    </div>
-                </div>
-                        
+                            $paidSQL=$polaczenie->query("SELECT name FROM payment_methods_assigned_to_users WHERE user_id='$user_id'");
+                            $rows=mysqli_fetch_array($paidSQL);
+                            }
+                            ?>
+                                <h3>Payment by:</h3>
+                                <?php
+                                    do
+                                    {                   
+                                ?>
+                                <div>
+                                <input type="radio"  name="updateOutcomePaidBy" id="updateOutcomePaidBy" value="<?php echo $rows['name'];?>" checked>
+                                <label><?php echo $rows['name'];?></label>
+                                </div>
+                                <?php
+                           }while($rows=mysqli_fetch_array($paidSQL));
+                          
+                            if($polaczenie->connect_errno!=0)
+                            {
+                                echo "Error".$polaczenie ->connect_erno;
+                            }else
+                            {
+                            $rezultatt=@$polaczenie->query
+                            ("SELECT name FROM expenses_category_assigned_to_users WHERE user_id='$user_id'");
+                            $ilu_userow = $rezultatt->num_rows;
+
+                            $outcomeSQL=$polaczenie->query("SELECT name FROM expenses_category_assigned_to_users WHERE user_id='$user_id'");
+                            $rows=mysqli_fetch_array($outcomeSQL);
+                            }
+                            ?>
+                        <h3 class="text-dark">Category:</h3>
+	                    
+                        <?php
+                            do 
+                            {                   
+                        ?>
+                            <div >
+                                <input type="radio" name="updateOutcomePaidFor" id="updateOutcomePaidFor" value="<?php echo $rows['name'];?>" checked>
+                                <label><?php echo $rows['name'];?></label>
+                                </div>
+                                <?php
+                           }while($rows=mysqli_fetch_array($outcomeSQL));
+                           $polaczenie->close();                       
+                        ?> 
+                        <input class="mt-2"type="Comment" placeholder="Comment" name="updateOutcomeComment" id="updateOutcomeComment">
+                              
         </div>
+    </div>
 
         <!--BODY-->
         <div class="modal-footer">
@@ -469,23 +443,34 @@ else//($startDate>$endDate)
                             <table class="table table-striped table-bordered table-hover">
                                 <thead>
                                     <th scope ="col">Id</th>
+                                    <th>Category</th>
                                     <th>Value</th>
-                                    <th>Date</th>
-                                    <th>IncomeForm</th>
+                                    <th>Date</th>                                  
                                     <th>Comment</th>
                                     <th>Edit</th>
                                     <th>Delete</th>
                                     </thead>
                                 <tbody>
-                            <?php foreach($incomes as $income) {?>
-                                <tr>
-                                    <td><span id="incomeId"><h6><?php echo $income['balanceId'] ?></h6></span></td>
-                                    <td><span id="incomeValue"><h6><?php echo $income['value'] ?></h6></span></td>
-                                    <td><span id="incomeDate"><h6><?php echo $income['date'] ?></h6></span></td>
-                                    <td><span id="incomeFrom"><h6><?php echo $income['incomeFrom'] ?></h6></span></td>
+<?php
 
-                                    <td><span id="comment"><h6><?php echo $income['comment'] ?></h6></span></td>
-                                   
+require_once("connect.php");
+mysqli_report(MYSQLI_REPORT_STRICT);
+try{
+  $polaczenie1 = new mysqli($host,$db_user,$db_password,$db_name);
+  if($polaczenie1->connect_errno!=0)
+  {
+      throw new Exception(mysqli_connect_errno());
+  }
+  else
+  {
+
+                            foreach($incomes as $income) {?>
+                                <tr>
+                                    <td><span id="incomeId"><h6><?php echo $income['id'] ?></h6></span></td>
+                                    <td><span id="incomeFrom"><h6><?php echo $income['income_category_assigned_to_user_id'] ?></h6></span></td>
+                                    <td><span id="incomeValue"><h6><?php echo $income['amount'] ?></h6></span></td>
+                                    <td><span id="incomeDate"><h6><?php echo $income['date_of_income'] ?></h6></span></td>
+                                    <td><span id="comment"><h6><?php echo $income['income_comment'] ?></h6></span></td>
                                     <td>
                                     <button type="button" class="btn btn-primary editIncome" >
                                     <i class="bi bi-pencil"> </i>
@@ -497,7 +482,13 @@ else//($startDate>$endDate)
                                     </button>
                                     </td> 
                                 </tr>
-                            <?php }?>
+            <?php }}
+            $polaczenie1->close();
+            }catch(Exception $I)
+      {
+        echo '<span style="color:red;">"Blad serweraaaaaaaaa, poprosimy orejestracje w innym terminie"</span>';
+        echo '</br>';
+      }?>
                             </tbody>
                             
                                 </table>
@@ -523,31 +514,41 @@ else//($startDate>$endDate)
                                 <i class="bi bi-shop"></i>
                         </div>
                         <h3 class="card-title mb-3">
-                            Outcomes
+                            Expenses
                         </h3>
                         
                         <table class="table table-striped table-bordered table-hover">
                                 <thead>
                                 <th scope ="col">Id</th>
-                                    <th scope ="col">Value</th>
-                                    <th scope ="col">Date</th>
+                                    <th scope ="col">Paid for</th>
                                     <th scope ="col">PaidBy</th>
-                                    <th scope ="col">PaidFor</th>
+                                    <th scope ="col">Vlue</th>
+                                    <th scope ="col">Date</th>
                                     <th scope ="col">Comment</th>
                                     <th scope ="col">Edit</th>
                                     <th scope ="col">Delete</th>
                                     </thead>
                                 
-                            <?php foreach($outcomes as $outcome) {?>
+                            <?php 
+                            require_once("connect.php");
+                            mysqli_report(MYSQLI_REPORT_STRICT);
+                            $polaczenie1 = new mysqli($host,$db_user,$db_password,$db_name);
+
+                            foreach($outcomes as $outcome) {?>
                                 <tbody>
                                 <tr>
                                     
-                                <td><span id="outcomeId"><h6><?php echo $outcome['balanceId'] ?></h6></span></td>
-                                    <td><span id="outcomeValue"><h6><?php echo $outcome['value'] ?></h6></span></td>
-                                    <td><span id="outcomeDate"><h6><?php echo $outcome['date'] ?></h6></span></td>
-                                    <td><span id="paidBy"><h6><?php echo $outcome['paidBy'] ?></h6></span></td>
-                                    <td><span id="paidFor"><h6><?php echo $outcome['paidFor'] ?></h6></span></td>
-                                    <td><span id="Comment"><h6><?php echo $outcome['comment'] ?></h6></span></td>
+                                <td><span id="outcomeId"><h6><?php echo $outcome['id'] ?></h6></span></td>
+                
+                                    <td><span id="paidFor"><h6><?php 
+
+                                        
+                                    echo 7;
+                                    ?></h6></span></td>
+                                    <td><span id="paidBy"><h6><?php echo $outcome['payment_method_assigned_to_user_id'] ?></h6></span></td>
+                                    <td><span id="outcomeValue"><h6><?php echo $outcome['amount'] ?></h6></span></td>
+                                    <td><span id="outcomeDate"><h6><?php echo $outcome['date_of_expense'] ?></h6></span></td>
+                                    <td><span id="Comment"><h6><?php echo $outcome['expense_comment'] ?></h6></span></td>
                                     
                                     <td>
                                     <button type="button" class="btn btn-primary editOutcome" >
@@ -561,7 +562,9 @@ else//($startDate>$endDate)
                                 </div>
                                 </tr>
                                 </tbody>
-                            <?php }?>
+                            <?php }
+                            $polaczenie1->close();
+                            ?>
                             
                             
                                 </table>
@@ -617,6 +620,8 @@ else//($startDate>$endDate)
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+
+
 <script>
     $(document).ready(function(){
         $('.editOutcome').on('click',function(){
@@ -629,15 +634,17 @@ else//($startDate>$endDate)
 
             console.log(data);
             $('#outcomeId').val(data[0]);
-           $('#updatedOutcomeValue').val(data[1]);
-           $('#updateOutcomeDate').val(data[2]);
-           $('#updateOutcomePaidBy').val(data[3]);
-           $('#updateOutcomePaidFor').val(data[4]);
+            $('#updateOutcomePaidFor').val(data[1]);
+            $('#updateOutcomePaidBy').val(data[2]);
+           $('#updatedOutcomeValue').val(data[3]);
+           $('#updateOutcomeDate').val(data[4]);  
            $('#updateOutcomeComment').val(data[5]);
         });
     });
 </script>
 
+
+                                 
 <script>
     $(document).ready(function(){
         $('.editIncome').on('click',function(){
@@ -650,9 +657,9 @@ else//($startDate>$endDate)
 
             console.log(data);
             $('#incomeId').val(data[0]);
-           $('#updatedIncomeValue').val(data[1]);
-           $('#updateIncomeDate').val(data[2]);
-           $('#updateIncomeFrom').val(data[3]);
+            $('#updateIncomeFrom').val(data[1]);
+           $('#updatedIncomeValue').val(data[2]);
+           $('#updateIncomeDate').val(data[3]);
            $('#updateIncomeComment').val(data[4]);
            
            
