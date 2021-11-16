@@ -36,30 +36,12 @@ $_SESSION['udanaEdycjaUsera']=false;
       
       <div class="modal-body">
          <!--BODY-->
-         
-         
-    
                         <label for="nick" class="form-label">Name:</label>
                         <div class="input-group mb-2">
                             <span class="input-group-text">
                                 <i class="bi bi-person-fill"></i>
                             </span>
                         <input type="text" class="form-control" name="nick" value=<?php echo $_SESSION['user'];?>>
-                        </div>
-                        <?php
-                        if(isset($_SESSION['e_nick']))
-                        {
-                            echo '<div class="error">'.$_SESSION['e_nick'].'</div';
-                            unset($_SESSION['e_nick']);
-                        }
-                        ?>
-                         <label for="surename" class="form-label">Surename:</label>
-                        <div class="input-group mb-2">
-                            <span class="input-group-text">
-                                <i class="bi bi-person-fill"></i>
-                            </span>
-                        
-                        <input type="text" class="form-control" name="surename" value =<?php echo $_SESSION['nazwisko']?>>
                         </div>
                         <?php
                         if(isset($_SESSION['e_nick']))

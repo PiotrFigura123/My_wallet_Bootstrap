@@ -12,14 +12,30 @@ try{
       {
         if(isset($_POST['editUserData']))
         {   
-            $id=$_SESSION['idUser'];
+            
+            $user_id=$_SESSION['$idUser'];
             $name=$_POST['nick'];  
-            $sname=$_POST['surename'];  
             $email=$_POST['email'];
-            $_SESSION['user'] =$name;
-            $_SESSION['nazwisko']=$sname;
-            $_SESSION['Email']=$email;
-            if($polaczenie1->query("UPDATE logownie SET name='$name', surename='$sname',email='$email' WHERE userId=$id"))
+
+            $haslo1=$_POST['haslo1'];
+            $haslo2=$_POST['haslo2'];
+    
+                    if((strlen($haslo1)<8)||(strlen($haslo2)>20))
+                     {
+                     $wszystko_OK=false;
+                        $_SESSION['e_haslo']='Haslo musi posiadac od 8 do 20 znakow';
+    
+                        }
+                        if($haslo1!=$haslo2)
+                        {
+                            $wszystko_OK=false;
+                            $_SESSION['e_haslo']='Hasla musza byc rowne';
+                        
+                        }
+
+                         $haslo_hash=password_hash($haslo1,PASSWORD_DEFAULT);
+
+            if($polaczenie1->query("UPDATE users SET username='$name' ,email='$email' WHERE id=$user_id"))
                
             {
                
@@ -29,9 +45,10 @@ try{
             }
             else
             throw new Exception($polaczenie1->error);
-        $polaczenie1->close();
+        
             
         }
+        $polaczenie1->close();
         
     }
     }catch(Exception $I)

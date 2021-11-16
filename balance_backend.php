@@ -224,14 +224,7 @@ else//($startDate>$endDate)
            
 
         <!--BODY-->
-        <?php
-        if($_SESSION['udanaWdycjaWartosci']=true)
-        {
-            
-        }
-        
-        ?>
-        <div class="modal-footer">
+            <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
             <button type="submit" name ="saveEditedIncome" class="btn btn-primary">Save changes</button>
             </div>
@@ -466,8 +459,24 @@ try{
 
                             foreach($incomes as $income) {?>
                                 <tr>
-                                    <td><span id="incomeId"><h6><?php echo $income['id'] ?></h6></span></td>
-                                    <td><span id="incomeFrom"><h6><?php echo $income['income_category_assigned_to_user_id'] ?></h6></span></td>
+                                    <td><span id="incomeId"><h6><?php echo $income['id'];$incomeId=$income['id']; ?></h6></span></td>
+                                    <td><span id="incomeFrom">
+                                                <?php
+                                                require_once("connect.php");
+                                                mysqli_report(MYSQLI_REPORT_STRICT);
+                                            
+                                                $polaczenie1 = new mysqli($host,$db_user,$db_password,$db_name);
+
+                                                if($sqlIncomes_category_assigned_to_users=@$polaczenie1->query(
+                                                    "SELECT incomes_category_assigned_to_users.name FROM `incomes_category_assigned_to_users`,`incomes` 
+                                                    WHERE incomes_category_assigned_to_users.id=incomes.income_category_assigned_to_user_id 
+                                                    AND incomes.id=$incomeId"))
+                                                { 
+                                                    $wiersz=$sqlIncomes_category_assigned_to_users->fetch_assoc();
+                                                    $income_name=$wiersz['name'];
+                                                } 
+                                                ?>
+                                        <h6><?php echo $income_name ?></h6></span></td>
                                     <td><span id="incomeValue"><h6><?php echo $income['amount'] ?></h6></span></td>
                                     <td><span id="incomeDate"><h6><?php echo $income['date_of_income'] ?></h6></span></td>
                                     <td><span id="comment"><h6><?php echo $income['income_comment'] ?></h6></span></td>
@@ -482,10 +491,10 @@ try{
                                     </button>
                                     </td> 
                                 </tr>
-            <?php }}
-            $polaczenie1->close();
-            }catch(Exception $I)
-      {
+                            <?php }}
+                            $polaczenie1->close();
+                            }catch(Exception $I)
+                    {
         echo '<span style="color:red;">"Blad serweraaaaaaaaa, poprosimy orejestracje w innym terminie"</span>';
         echo '</br>';
       }?>
@@ -530,22 +539,44 @@ try{
                                     </thead>
                                 
                             <?php 
-                            require_once("connect.php");
-                            mysqli_report(MYSQLI_REPORT_STRICT);
-                            $polaczenie1 = new mysqli($host,$db_user,$db_password,$db_name);
-
                             foreach($outcomes as $outcome) {?>
                                 <tbody>
                                 <tr>
                                     
-                                <td><span id="outcomeId"><h6><?php echo $outcome['id'] ?></h6></span></td>
+                                <td><span id="outcomeId"><h6><?php echo $outcome['id']; $outcomeId=$outcome['id'];?></h6></span></td>
                 
                                     <td><span id="paidFor"><h6><?php 
 
-                                        
-                                    echo 7;
+                                    require_once("connect.php");
+                                    mysqli_report(MYSQLI_REPORT_STRICT);
+                                   
+                                    $polaczenie1 = new mysqli($host,$db_user,$db_password,$db_name);
+
+                                    if($sqlExpenses_category_assigned_to_user=@$polaczenie1->query(
+                                        "SELECT expenses_category_assigned_to_users.name FROM `expenses_category_assigned_to_users`,`expenses` 
+                                        WHERE expenses_category_assigned_to_users.id=expenses.expense_category_assigned_to_user_id 
+                                        AND expenses.id=$outcomeId"))
+                                    { 
+                                        $wiersz=$sqlExpenses_category_assigned_to_user->fetch_assoc();
+                                        $expense_name=$wiersz['name'];
+                                    } 
+                                    if($sqlPayment_method_assigned_to_user_id=@$polaczenie1->query(
+                                        "SELECT payment_methods_assigned_to_users.name FROM `payment_methods_assigned_to_users`,`expenses` 
+                                        WHERE payment_methods_assigned_to_users.id=expenses.payment_method_assigned_to_user_id 
+                                        AND expenses.id=$outcomeId"))
+                                    { 
+                                        $wiersz=$sqlPayment_method_assigned_to_user_id->fetch_assoc();
+                                        $expense_payment_name=$wiersz['name'];
+                                    } 
+                                       /*
+                                       SELECT expenses_category_assigned_to_users.name FROM `expenses_category_assigned_to_users`,`expenses` 
+                                       WHERE expenses_category_assigned_to_users.id=expenses.expense_category_assigned_to_user_id 
+                                       AND expenses.id=20
+                                       */ 
+                                      
+                                    echo $expense_name;
                                     ?></h6></span></td>
-                                    <td><span id="paidBy"><h6><?php echo $outcome['payment_method_assigned_to_user_id'] ?></h6></span></td>
+                                    <td><span id="paidBy"><h6><?php echo $expense_payment_name ?></h6></span></td>
                                     <td><span id="outcomeValue"><h6><?php echo $outcome['amount'] ?></h6></span></td>
                                     <td><span id="outcomeDate"><h6><?php echo $outcome['date_of_expense'] ?></h6></span></td>
                                     <td><span id="Comment"><h6><?php echo $outcome['expense_comment'] ?></h6></span></td>

@@ -20,7 +20,7 @@ try{
         $paidForOutcome=$_POST['updateOutcomePaidFor'];
         $comment=$_POST['updateOutcomeComment'];
 
-        echo '$paidByOutcome = '.$paidByOutcome.'paidForOutcome = '.$paidForOutcome;
+        //echo '$paidByOutcome = '.$paidByOutcome.'paidForOutcome = '.$paidForOutcome;
         if($sqlexpenses_category_assigned_to_users=@$polaczenie1->query(
             "SELECT id FROM expenses_category_assigned_to_users WHERE user_id='$user_id' AND name='$paidForOutcome'"))
         { 
@@ -60,9 +60,17 @@ try{
             $date=$_POST['updateIncomeDate'];
             $incomeFrom=$_POST['drone'];
             $comment=$_POST['updateIncomeComment'];
+
+            if($sqlincomes_category_assigned_to_users=@$polaczenie1->query(
+                "SELECT id FROM incomes_category_assigned_to_users WHERE user_id='$user_id' AND name='$incomeFrom'"))
+            { 
+                $wiersz=$sqlincomes_category_assigned_to_users->fetch_assoc();
+                $incomes_category_assigned_to_users=$wiersz['id'];
+            } 
+
                if($polaczenie1->query("UPDATE incomes SET amount=$value, 
                date_of_income='$date', 
-               income_category_assigned_to_user_id='$incomeFrom', 
+               income_category_assigned_to_user_id='$incomes_category_assigned_to_users', 
                income_comment='$comment' WHERE id=$id"))              
                 {                 
                     $_SESSION['udanaEdycjaOutcome']=true;

@@ -33,14 +33,15 @@ if(isset($_POST['email']))
     if((strlen($haslo1)<8)||(strlen($haslo2)>20))
     {
         $wszystko_OK=false;
-        $_SESSION['e_haslo']='Haslo musi posiadac od 8 do 20 znakow';
+       // $_SESSION['e_haslo']=
+        echo "Haslo musi posiadac od 8 do 20 znakow";
     
     }
     if($haslo1!=$haslo2)
     {
         $wszystko_OK=false;
-        $_SESSION['e_haslo']='Hasla musza byc rowne';
-    
+        //$_SESSION['e_haslo']='Hasla musza byc rowne';
+        echo "Haslo ";
     }
 
     $haslo_hash=password_hash($haslo1,PASSWORD_DEFAULT);
